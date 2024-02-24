@@ -11,10 +11,3 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
-    networks:
-      - auth_network
-
-networks:
-  auth_network:
-    name: auth_network
-    driver: bridge
