@@ -7,8 +7,8 @@ interface Props {
 const PasswordStrength = ({ passStrength }: Props) => {
     return (
         <div
-            className={cn("col-span-2 flex gap-2", {
-                "justify-around w-31": passStrength === 3,
+            className={cn("col-span-2 flex flex-row gap-2", {
+                "justify-around": passStrength === 3,
                 "justify-start": passStrength < 3,
             })}
         >

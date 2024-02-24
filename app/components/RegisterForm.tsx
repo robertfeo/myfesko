@@ -1,4 +1,5 @@
 "use client";
+import { registerUser } from "@/lib/actions/authActions";
 import {
     EnvelopeIcon,
     EyeIcon,
@@ -12,6 +13,7 @@ import { Button, Checkbox, Input, Link } from "@nextui-org/react";
 import { passwordStrength } from "check-password-strength";
 import { useEffect, useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import validator from "validator";
 import { z } from "zod";
 import PasswordStrength from "./PasswordStrength";
@@ -56,6 +58,14 @@ const RegisterForm = () => {
     const [isVisiblePass, setIsVisiblePass] = useState(false)
     const toggleVisiblePass = () => setIsVisiblePass(prev => !prev)
     const saveUser: SubmitHandler<InputType> = async (data) => {
+        const { acceptedTerms, confirmPassword, ...user } = data
+
+        try {
+            const result = await registerUser(user)
+            toast.success("User registered successfully!")
+        } catch (error) {
+            toast.error("An error occurred while registering the user.")
+        }
         reset()
     }
 
