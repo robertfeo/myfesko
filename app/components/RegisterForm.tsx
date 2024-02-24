@@ -2,16 +2,32 @@
 import { EnvelopeIcon, EyeIcon, EyeSlashIcon, LockClosedIcon, PhoneIcon, UserIcon } from "@heroicons/react/16/solid";
 import { Button, Checkbox, Input, Link } from "@nextui-org/react";
 import { useState } from "react";
+import validator from "validator";
 import { z } from "zod";
 
 const FormSchema = z.object({
-    firstName: z.string().min(2, "First Name must be at least 2 characters long.").max(45, "First Name must be at most 45 characters long."),
-    lastName: z.string(),
-    email: z.string().email(),
-    phone: z.string(),
-    password: z.string(),
-    confirmPassword: z.string(),
-    acceptTerms: z.boolean(),
+    firstName: z.string()
+        .min(2, "First Name must be at least 2 characters long.")
+        .max(45, "First Name must be at most 45 characters long.")
+        .regex(new RegExp("^[a-ZA-Z+$"), "No special characters allowed!"),
+    lastName: z.string()
+        .min(2, "First Name must be at least 2 characters long.")
+        .max(45, "First Name must be at most 45 characters long.")
+        .regex(new RegExp("^[a-ZA-Z+$"), "No special characters allowed!"),
+    email: z.string().email("Please enter a valid email address."),
+    phone: z.string().refine(validator.isMobilePhone, "Please enter a valid phone number."),
+    password: z.string()
+        .min(8, "Password must be at least 8 characters long.")
+        .max(45, "Password must be at most 45 characters long."),
+    confirmPassword: z.string()
+        .min(8, "Password must be at least 8 characters long.")
+        .max(45, "Password must be at most 45 characters long."),
+    acceptedTerms: z.literal(true, {
+        errorMap: () => ({ message: "You must accept the terms and conditions to sign up." })
+    }),
+}).refine(data => data.password === data.confirmPassword, {
+    message: "Passwords do not match.",
+    path: ["confirmPassword"]
 })
 
 const RegisterForm = () => {
