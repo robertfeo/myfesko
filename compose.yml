@@ -1,4 +1,4 @@
-version: '3.9'
+version: "3.9"
 
 services:
   database:
@@ -11,3 +11,76 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_HOST_AUTH_METHOD: trust
+    env_file:
+      - .env
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "sh -c 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}'",
+        ]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+    ports:
+      - "5432:5432"
+    volumes:
+      - database:/var/lib/postgresql/data
+    networks:
+      - myfeskoweb_network
+
+  web:
+    container_name: web
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      database:
+        condition: service_healthy
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@database:5432/${POSTGRES_DB}?schema=public
+    develop:
+      watch:
+        - action: rebuild
+          path: package.json
+        - action: rebuild
+          path: package-lock.json
+        - action: rebuild
+          path: bun.lockb
+        - action: rebuild
+          path: ./next.config.mjs
+        - action: rebuild
+          path: ./next.config.js
+        - action: rebuild
+          path: ./tsconfig.json
+        - action: rebuild
+          path: ./lib
+        - action: sync
+          path: .
+          target: /app
+    networks:
+      - myfeskoweb_network
+
+  adminer:
+    restart: always
+    image: adminer:latest
+    container_name: adminer
+    ports:
+      - "8008:8080"
+    environment:
+      - ADMINER_DESIGN='brade'
+    networks:
+      - myfeskoweb_network
+
+volumes:
+  database:
+    name: myfeskoweb_volume
+
+networks:
+  myfeskoweb_network:
+    name: myfeskoweb_network
+    driver: bridge

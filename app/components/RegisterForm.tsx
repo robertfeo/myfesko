@@ -28,7 +28,7 @@ const FormSchema = z.object({
         .max(45, "First Name must be at most 45 characters long.")
         .regex(new RegExp("^[a-zA-Z+]+$"), "No special characters allowed!"),
     email: z.string().email("Please enter a valid email address."),
-    phone: z.string().refine(validator.isMobilePhone, "Please enter a valid phone number."),
+    phoneNumber: z.string().refine(validator.isMobilePhone, "Please enter a valid phone number."),
     password: z.string()
         .min(8, "Password must be at least 8 characters long.")
         .max(45, "Password must be at most 45 characters long."),
@@ -74,7 +74,7 @@ const RegisterForm = () => {
             <Input errorMessage={errors.firstName?.message} isInvalid={!!errors.firstName} {...register("firstName")} label="First Name" startContent={<UserIcon className="w-4"></UserIcon>}></Input>
             <Input errorMessage={errors.lastName?.message} isInvalid={!!errors.lastName} {...register("lastName")} label="Last Name" startContent={<UserIcon className="w-4"></UserIcon>}></Input>
             <Input errorMessage={errors.email?.message} isInvalid={!!errors.email} {...register("email")} className="col-span-2" type="email" label="Email" startContent={<EnvelopeIcon className="w-4"></EnvelopeIcon>}></Input>
-            <Input errorMessage={errors.phone?.message} isInvalid={!!errors.phone} {...register("phone")} className="col-span-2" type="phone" label="Phone" startContent={<PhoneIcon className="w-4"></PhoneIcon>}></Input>
+            <Input errorMessage={errors.phoneNumber?.message} isInvalid={!!errors.phoneNumber} {...register("phoneNumber")} className="col-span-2" type="phone" label="Phone" startContent={<PhoneIcon className="w-4"></PhoneIcon>}></Input>
             <Input errorMessage={errors.password?.message} isInvalid={!!errors.password} {...register("password")} className="col-span-2" type={isVisiblePass ? "text" : "password"} label="Password" startContent={<LockClosedIcon className="w-4" />}
                 endContent={
                     isVisiblePass ? (<EyeIcon className="w-4 cursor-pointer" onClick={toggleVisiblePass}></EyeIcon>) : (<EyeSlashIcon className="w-4 cursor-pointer" onClick={toggleVisiblePass}></EyeSlashIcon>)
