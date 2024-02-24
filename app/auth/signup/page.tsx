@@ -3,12 +3,14 @@ import { Link } from "@nextui-org/react";
 
 const SignUpPage = () => {
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 justify-center items-center">
-            <div className="md:col-span-2 flex justify-center items-center">
-                <p className="text-center p-2">Already signed up?</p>
-                <Link href={"/auth/login"}>Log In</Link>
+        <div className="flex flex-col items-center">
+            <div className="flex flex-row gap-5 mt-10">
+                <RegisterForm />
+                <div className="border h-10 rounded-lg bg-zinc-100 mt-5 p-10 md:col-span-2 flex justify-center items-center">
+                    <p className="text-center p-2">Already signed up?</p>
+                    <Link href={"/auth/login"}>Log In</Link>
+                </div>
             </div>
-            <RegisterForm />
         </div>
     );
 }
