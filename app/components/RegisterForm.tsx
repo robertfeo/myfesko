@@ -1,11 +1,20 @@
 "use client";
-import { EnvelopeIcon, EyeIcon, EyeSlashIcon, LockClosedIcon, PhoneIcon, UserIcon } from "@heroicons/react/16/solid";
+import {
+    EnvelopeIcon,
+    EyeIcon,
+    EyeSlashIcon,
+    LockClosedIcon,
+    PhoneIcon,
+    UserIcon
+} from "@heroicons/react/20/solid";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Checkbox, Input, Link } from "@nextui-org/react";
-import { useState } from "react";
+import { passwordStrength } from "check-password-strength";
+import { useEffect, useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import validator from "validator";
 import { z } from "zod";
+import PasswordStrength from "./PasswordStrength";
 
 const FormSchema = z.object({
     firstName: z.string()
@@ -35,15 +44,18 @@ const FormSchema = z.object({
 type InputType = z.infer<typeof FormSchema>
 
 const RegisterForm = () => {
-    const { register, handleSubmit, reset, control, formState: { errors } } = useForm<InputType>({
+    const { register, handleSubmit, reset, control, watch, formState: { errors } } = useForm<InputType>({
         resolver: zodResolver(FormSchema)
     })
 
+    useEffect(() => {
+        setPassStrength(passwordStrength(watch().password).id);
+    }, [watch().password]);
+
+    const [passStrength, setPassStrength] = useState(0)
     const [isVisiblePass, setIsVisiblePass] = useState(false)
     const toggleVisiblePass = () => setIsVisiblePass(prev => !prev)
-
     const saveUser: SubmitHandler<InputType> = async (data) => {
-        console.log({ data })
         reset()
     }
 
@@ -58,6 +70,7 @@ const RegisterForm = () => {
                     isVisiblePass ? (<EyeIcon className="w-4 cursor-pointer" onClick={toggleVisiblePass}></EyeIcon>) : (<EyeSlashIcon className="w-4 cursor-pointer" onClick={toggleVisiblePass}></EyeSlashIcon>)
                 }>
             </Input>
+            <PasswordStrength passStrength={passStrength}></PasswordStrength>
             <Input errorMessage={errors.confirmPassword?.message} isInvalid={!!errors.confirmPassword} {...register("confirmPassword")} className="col-span-2" type="password" label="Confirm Password" startContent={<LockClosedIcon className="w-4" />}></Input>
             <div className="flex flex-col col-span-2 justify-center items-center gap-3">
                 <Controller control={control} name="acceptedTerms" render={({ field }) => {
