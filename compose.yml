@@ -59,9 +59,8 @@ services:
           path: ./tsconfig.json
         - action: rebuild
           path: ./lib
-        - action: sync
-          path: .
-          target: /app
+        - action: rebuild
+          path: ./app
     networks:
       - myfeskoweb_network
 
