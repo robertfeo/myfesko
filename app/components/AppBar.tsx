@@ -1,4 +1,5 @@
-import { Button, Link, Navbar, NavbarContent, NavbarItem } from "@nextui-org/react";
+import { Link, Navbar, NavbarContent, NavbarItem } from "@nextui-org/react";
+import LoginButton from "./LoginButton";
 
 const AppBar = () => {
     return (
@@ -11,17 +12,11 @@ const AppBar = () => {
                 </NavbarItem>
             </NavbarContent>
             <NavbarContent justify="end">
-                {/* <NavbarItem className="hidden lg:flex">
-                    <Link href="#">Login</Link>
-                </NavbarItem> */}
                 <NavbarItem>
-                    <Button as={Link} color="primary" href="/auth/signup" variant="flat">
-                        Sign Up
-                    </Button>
+                    <LoginButton />
                 </NavbarItem>
             </NavbarContent>
         </Navbar>
-
     );
 }
 
