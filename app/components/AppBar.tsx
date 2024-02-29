@@ -1,3 +1,5 @@
+'use server';
+
 import { Link, Navbar, NavbarContent, NavbarItem } from "@nextui-org/react";
 import LoginButton from "./LoginButton";
 
