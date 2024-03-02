@@ -1,12 +1,12 @@
 "use client";
 
 import { Avatar, Button } from "@nextui-org/react";
-import { useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 
 const LoginButton = () => {
     const { data: session } = useSession();
-    console.log(session);
+    console.log({ session });
 
     return (
         <div className="flex items-center gap-2">
@@ -23,10 +23,10 @@ const LoginButton = () => {
                 </>
             ) : (
                 <>
-                    <Button as={Link} href={"api/auth/signin"} color="primary">Log In</Button>
-                    <Button as={Link} href={"/auth/register"} color="primary">
-                        Register
-                    </Button>
+                    {/* <Button as={Link} href={"api/auth/signin"} color="primary">Log In</Button> */}
+                    {/* <Button as={Link} href={"/auth/login"} color="primary">Log In</Button> */}
+                    <Button onClick={() => signIn()} color="primary">Log In</Button>
+                    <Button as={Link} href={"/auth/register"} color="primary">Register</Button>
                 </>
             )}
         </div>

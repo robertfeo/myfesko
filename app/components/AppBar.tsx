@@ -1,6 +1,7 @@
 'use server';
 
-import { Link, Navbar, NavbarContent, NavbarItem } from "@nextui-org/react";
+import { Navbar, NavbarContent, NavbarItem } from "@nextui-org/react";
+import Link from "next/link";
 import LoginButton from "./LoginButton";
 
 const AppBar = () => {
@@ -8,7 +9,7 @@ const AppBar = () => {
         <Navbar isBordered>
             <NavbarContent className="hidden sm:flex gap-4" justify="center">
                 <NavbarItem>
-                    <Link color="foreground" href="/">
+                    <Link className="hover:text-sky-500" href="/">
                         Home
                     </Link>
                 </NavbarItem>

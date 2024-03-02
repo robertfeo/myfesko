@@ -5,6 +5,10 @@ import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 export const authOptions: AuthOptions = {
+    pages: {
+        signIn: '/auth/login',
+        verifyRequest: '/auth/verify-request',
+    },
     providers: [
         CredentialsProvider({
             name: 'Credentials',
