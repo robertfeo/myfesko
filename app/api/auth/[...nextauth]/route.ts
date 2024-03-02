@@ -1,4 +1,5 @@
 import prisma from "@/lib/prisma";
+import { User } from "@prisma/client";
 import { AuthOptions } from "next-auth";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -30,7 +31,23 @@ export const authOptions: AuthOptions = {
                 return userWithoutPass
             }
         }),
-    ]
+    ],
+
+    callbacks: {
+        // take user object and put in token object
+        async jwt({ token, user }) {
+            if (user) {
+                token.user = user as User;
+            }
+            return token;
+        },
+
+        // take token object and put in session object
+        async session({ token, session }) {
+            session.user = token.user;
+            return session;
+        }
+    }
 }
 
 const handler = NextAuth(authOptions)
