@@ -1,6 +1,9 @@
 import Head from 'next/head'
 
-export default function Home() {
+export default async function Home() {
+
+  /* await sendMail({to: "fesko.robert@gmail.com", subject: "Test", body: "Hello World!"}) */
+
   return (
     <div>
       <Head>

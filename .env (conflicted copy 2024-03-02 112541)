@@ -1,0 +1,16 @@
+DATABASE_URL=postgresql://robert:HaiCuDocker.1326$97@localhost:5432/auths?schema=public
+POSTGRES_USER=robert
+POSTGRES_PASSWORD=HaiCuDocker.1326$97
+POSTGRES_DB=auths
+
+NEXTJS_PORT=9005
+NEXTAUTH_SECRET=SOc3bXWbKHy3/kaiC2UUepbeLUfSi09fYc4mmyzv5N4=
+
+# Email
+#SMTP_EMAIL=fesko.robert@gmail.com
+#SMTP_GMAIL_PASSWORD="trpl yihe wpjy hklc"
+
+# EMAIL
+SMTP_EMAIL=live.smtp.mailtrap.io
+SMTP_USER="api"
+SMTP_PASS="d684219d5a17289ce89d8b793a19a27f"
