@@ -71,11 +71,11 @@ const RegisterForm = () => {
 
     return (
         <form onSubmit={handleSubmit(saveUser)} className="grid grid-cols-2 gap-3 p-5 justify-center items-center">
-            <Input errorMessage={errors.firstName?.message} isInvalid={!!errors.firstName} {...register("firstName")} label="First Name" startContent={<UserIcon className="w-4"></UserIcon>}></Input>
-            <Input errorMessage={errors.lastName?.message} isInvalid={!!errors.lastName} {...register("lastName")} label="Last Name" startContent={<UserIcon className="w-4"></UserIcon>}></Input>
-            <Input errorMessage={errors.email?.message} isInvalid={!!errors.email} {...register("email")} className="col-span-2" type="email" label="Email" startContent={<EnvelopeIcon className="w-4"></EnvelopeIcon>}></Input>
-            <Input errorMessage={errors.phoneNumber?.message} isInvalid={!!errors.phoneNumber} {...register("phoneNumber")} className="col-span-2" type="phone" label="Phone" startContent={<PhoneIcon className="w-4"></PhoneIcon>}></Input>
-            <Input errorMessage={errors.password?.message} isInvalid={!!errors.password} {...register("password")} className="col-span-2" type={isVisiblePass ? "text" : "password"} label="Password" startContent={<LockClosedIcon className="w-4" />}
+            <Input size="sm" errorMessage={errors.firstName?.message} isInvalid={!!errors.firstName} {...register("firstName")} label="First Name" startContent={<UserIcon className="w-4"></UserIcon>}></Input>
+            <Input size="sm" errorMessage={errors.lastName?.message} isInvalid={!!errors.lastName} {...register("lastName")} label="Last Name" startContent={<UserIcon className="w-4"></UserIcon>}></Input>
+            <Input size="sm" errorMessage={errors.email?.message} isInvalid={!!errors.email} {...register("email")} className="col-span-2" type="email" label="Email" startContent={<EnvelopeIcon className="w-4"></EnvelopeIcon>}></Input>
+            <Input size="sm" errorMessage={errors.phoneNumber?.message} isInvalid={!!errors.phoneNumber} {...register("phoneNumber")} className="col-span-2" type="phone" label="Phone" startContent={<PhoneIcon className="w-4"></PhoneIcon>}></Input>
+            <Input size="sm" errorMessage={errors.password?.message} isInvalid={!!errors.password} {...register("password")} className="col-span-2" type={isVisiblePass ? "text" : "password"} label="Password" startContent={<LockClosedIcon className="w-4" />}
                 endContent={
                     isVisiblePass ? (<EyeIcon className="w-4 cursor-pointer" onClick={toggleVisiblePass}></EyeIcon>) : (<EyeSlashIcon className="w-4 cursor-pointer" onClick={toggleVisiblePass}></EyeSlashIcon>)
                 }>
@@ -84,10 +84,10 @@ const RegisterForm = () => {
             <Input errorMessage={errors.confirmPassword?.message} isInvalid={!!errors.confirmPassword} {...register("confirmPassword")} className="col-span-2" type="password" label="Confirm Password" startContent={<LockClosedIcon className="w-4" />}></Input>
             <div className="flex flex-col col-span-2 justify-center items-center gap-3">
                 <Controller control={control} name="acceptedTerms" render={({ field }) => {
-                    return <Checkbox onChange={field.onChange} onBlur={field.onBlur}>I Accept The <Link href="/terms"> Terms</Link></Checkbox>
+                    return <Checkbox size="sm" onChange={field.onChange} onBlur={field.onBlur}>I Accept The <Link href="/terms"> Terms</Link></Checkbox>
                 }} />
                 {!!errors.acceptedTerms && <p className="text-red-500 text-sm">{errors.acceptedTerms.message}</p>}
-                <Button className="w-40" color="primary" variant="solid" type="submit">Sign Up</Button>
+                <Button size="sm" className="w-full" color="primary" variant="solid" type="submit">Sign Up</Button>
             </div>
         </form>
     )

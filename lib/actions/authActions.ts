@@ -2,7 +2,7 @@
 
 import { PrismaClient, User } from "@prisma/client";
 import { signJWT, verifyJWT } from "../jwt";
-import { compileActivationTemplate, sendMail } from "../mail";
+import { compileActivationTemplate, compileResetTemplate, sendMail } from "../mail";
 const prisma = new PrismaClient();
 
 export async function registerUser(user: Omit<User, "id" | "emailVerified" | "image">) {
@@ -44,6 +44,24 @@ export const activateUser: ActivateUserFunc = async (jwtUserID) => {
     }
     catch (error) {
         console.error("Error activating user:", error);
+        throw error;
+    }
+}
+
+export async function forgotPassword(email: string) {
+    try {
+        const user = await prisma.user.findUnique({ where: { email } });
+        if (!user) throw new Error("User not found");
+        const jwtUserID = signJWT({ id: user.id });
+        const resetURL = `${process.env.NEXTAUTH_URL}/auth/resetPassword/${jwtUserID}`;
+        const body = compileResetTemplate(user.firstName, resetURL);
+        const sendResult = await sendMail({
+            to: user.email,
+            subject: "Reset Your Password",
+            body
+        });
+        return "success";
+    } catch (error) {
         throw error;
     }
 }

@@ -75,14 +75,9 @@ const LoginForm = ({ callbackUrl, className = "" }: LoginFormProps) => {
                             </button>
                         }
                     />
-                    {/* <div className="flex flex-col items-center justify-center gap-2">
-                        <Button className="w-15 shadow-sm backdrop-blur-sm" color="primary" type="submit" disabled={isSubmitting} isLoading={isSubmitting}>
-                            {isSubmitting ? "Logging in..." : "Login"}
-                        </Button>
-                    </div> */}
                     <div className="flex flex-row items-center justify-center gap-2">
                         <p>Forgot password?</p>
-                        <Link className="text-[#338DF3]" href={"auth/forgotPass"}>Reset password</Link>
+                        <Link className="text-[#338DF3]" href={"/auth/forgotPassword"}>Reset password</Link>
                     </div>
                     <Button size="sm" className="shadow-sm backdrop-blur-sm" color="primary" type="submit" disabled={isSubmitting} isLoading={isSubmitting}>
                         {isSubmitting ? "Logging in..." : "Login"}
