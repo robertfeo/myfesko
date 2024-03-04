@@ -1,4 +1,5 @@
 import nodemailer from 'nodemailer';
+import { activationTemplate } from './emailTemplates/activation';
 
 export async function sendMail({ to, subject, body }: { to: string, subject: string, body: string }) {
     const { SMTP_EMAIL, SMTP_GMAIL_EMAIL, SMTP_GMAIL_PASSWORD, SMTP_USER, SMTP_PASS } = process.env
@@ -9,6 +10,8 @@ export async function sendMail({ to, subject, body }: { to: string, subject: str
             pass: SMTP_GMAIL_PASSWORD
         }
     })
+
+    // -------- For Mailtrap --------
     /* var transport = nodemailer.createTransport({
         host: "live.smtp.mailtrap.io",
         port: 587,
@@ -18,23 +21,24 @@ export async function sendMail({ to, subject, body }: { to: string, subject: str
         }
     }) */
 
-    try {
-        /* await transport.sendMail({
+    // -------- For Testing --------
+    /* try {
+        await transport.sendMail({
             from: SMTP_EMAIL,
             to,
             subject,
             html: body
-        }) */
+        })
         const testTransport = await transport.verify()
-        /* console.log("Test results of Email Transport: " + testTransport) */
+        console.log("Test results of Email Transport: " + testTransport)
     }
     catch (error) {
         console.error(error)
-    }
+    } */
 
     try {
         const sendResult = await transport.sendMail({
-            from: SMTP_EMAIL,
+            from: SMTP_GMAIL_EMAIL,
             to,
             subject,
             html: body
@@ -43,4 +47,11 @@ export async function sendMail({ to, subject, body }: { to: string, subject: str
     } catch (e) {
         console.error(e)
     }
+}
+
+export function compileActivationTemplate(name: string, url: string) {
+    const handlebar = require('handlebars')
+    const template = handlebar.compile(activationTemplate)
+    const htmlBody = template({ name, url })
+    return htmlBody
 }

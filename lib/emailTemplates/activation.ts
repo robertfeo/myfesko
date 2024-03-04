@@ -1,4 +1,4 @@
-export const ActivationTemplate = `<!DOCTYPE html>
+export const activationTemplate = `<!DOCTYPE html>
 <html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" lang="en">
 
 <head>
