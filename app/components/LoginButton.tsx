@@ -6,16 +6,15 @@ import Link from "next/link";
 
 const LoginButton = () => {
     const { data: session } = useSession();
-    /* console.log({ session }); */
 
     return (
         <div className="flex items-center gap-2">
             {session && session.user ? (
                 <>
-                    <Avatar radius="lg" src={`${session.user.image}`} size="md" />
-                    <p>{`${session.user.firstName} ${session.user.lastName}`}</p>
+                    <Avatar radius="lg" src={`${session.user.image}`} size="sm" />
+                    <p className="text-medium">{`${session.user.firstName} ${session.user.lastName}`}</p>
                     <Link
-                        className="tex-sky-500 hover:text-sky-600 transition-colors"
+                        className="tex-sky-500 hover:text-sky-600 transition-colors text-medium"
                         href={"/api/auth/signout"}
                     >
                         Log Out
@@ -23,8 +22,6 @@ const LoginButton = () => {
                 </>
             ) : (
                 <>
-                    {/* <Button as={Link} href={"api/auth/signin"} color="primary">Log In</Button> */}
-                    {/* <Button as={Link} href={"/auth/login"} color="primary">Log In</Button> */}
                     <Button size="sm" onClick={() => signIn()} color="primary" variant="ghost">Log In</Button>
                     <Button size="sm" as={Link} href={"/auth/register"} color="primary">Register</Button>
                 </>
