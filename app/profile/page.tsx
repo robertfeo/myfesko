@@ -11,9 +11,9 @@ const ProfilePage = async () => {
             {session && user ? (
                 <>
                     <h1>Profile</h1>
-                    <p>{user.firstName}</p>
-                    <p>{user.email}</p>
-                    <p>{user.phoneNumber}</p>
+                    <p>First Name: {user.firstName}</p>
+                    <p>Email: {user.email}</p>
+                    <p>Phone: {user.phoneNumber}</p>
                 </>
             ) : (
                 <h1>Not logged in</h1>

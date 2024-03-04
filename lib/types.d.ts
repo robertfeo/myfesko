@@ -12,7 +12,7 @@ declare module "next-auth/jwt" {
     }
 }
 
-declare module '*.handlebars' {
+/* declare module '*.handlebars' {
     const template: (context: any) => string;
     export default template;
-}
+} */
