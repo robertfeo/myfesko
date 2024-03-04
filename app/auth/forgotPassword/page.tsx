@@ -37,13 +37,37 @@ const ForgetPasswordPage = () => {
     };
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-3">
-            <form onSubmit={handleSubmit(submitRequest)}>
-                <Input label="Email" {...register("email")} startContent={<EnvelopeIcon className="w-4" />} errorMessage={errors.email?.message} />
-                <Button type="submit" disabled={isSubmitting} isLoading={isSubmitting}>
-                    {isSubmitting ? "Please Wait..." : "Send"}
-                </Button>
-            </form>
+        <div className="min-h-full flex flex-col justify-center items-center py-12 px-4 sm:px-6 lg:px-8">
+            <div className="max-w-md w-full space-y-8">
+                <div>
+                    <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Forgot Your Password?</h2>
+                    <p className="mt-2 text-center text-sm text-gray-600">
+                        Enter the email address associated with your account, and we’ll send you a link to reset your password.
+                    </p>
+                </div>
+                <form className="mt-8 space-y-6" onSubmit={handleSubmit(submitRequest)}>
+                    <div className="rounded-md -space-y-px">
+                        <Input
+                            label="Email"
+                            {...register("email")}
+                            startContent={<EnvelopeIcon className="w-5 text-gray-400" />}
+                            errorMessage={errors.email?.message}
+                            className="w-full "
+                        />
+                    </div>
+
+                    <Button
+                        className="w-full"
+                        color="primary"
+                        size="sm"
+                        type="submit"
+                        disabled={isSubmitting}
+                        isLoading={isSubmitting}
+                    >
+                        {isSubmitting ? "Please Wait..." : "Send Reset Link"}
+                    </Button>
+                </form>
+            </div>
         </div>
     );
 }

@@ -13,31 +13,6 @@ export async function sendMail({ to, subject, body }: { to: string, subject: str
         }
     })
 
-    // -------- For Mailtrap --------
-    /* var transport = nodemailer.createTransport({
-        host: "live.smtp.mailtrap.io",
-        port: 587,
-        auth: {
-            user: SMTP_USER,
-            pass: SMTP_PASS
-        }
-    }) */
-
-    // -------- For Testing --------
-    /* try {
-        await transport.sendMail({
-            from: SMTP_EMAIL,
-            to,
-            subject,
-            html: body
-        })
-        const testTransport = await transport.verify()
-        console.log("Test results of Email Transport: " + testTransport)
-    }
-    catch (error) {
-        console.error(error)
-    } */
-
     try {
         const sendResult = await transport.sendMail({
             from: SMTP_GMAIL_EMAIL,
