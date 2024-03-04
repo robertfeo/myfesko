@@ -11,8 +11,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.0",
     "@heroicons/react": "^2.1.1",
     "@hookform/resolvers": "^3.3.4",
+    "@mui/icons-material": "^5.15.11",
+    "@mui/material": "^5.15.11",
     "@nextui-org/react": "^2.2.9",
     "@prisma/client": "^5.10.2",
     "@types/bcrypt": "^5.0.2",

@@ -16,6 +16,11 @@ const config: Config = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
     },
+    color: {
+      'custom-link-color': {
+        100: '#338DF3',
+      },
+    },
   },
   plugins: [nextui()],
 };

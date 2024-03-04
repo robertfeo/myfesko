@@ -1,5 +1,4 @@
 import LoginForm from "@/app/components/LoginForm";
-import { Link } from "@nextui-org/react";
 
 interface Props {
     searchParams: {
@@ -8,11 +7,9 @@ interface Props {
 }
 
 const LoginPage = ({ searchParams }: Props) => {
-    console.log({ searchParams });
     return (
-        <div className="flex justify-center items-center">
-            <LoginForm callbackUrl={searchParams.callbackUrl} />
-            <Link href={"auth/forgotPass"}>Forgot password</Link>
+        <div className="flex flex-col justify-center items-center w-full">
+            <LoginForm callbackUrl={searchParams.callbackUrl} className="w-full max-w-md mt-20" />
         </div>
     )
 }

@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 "use client";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/20/solid";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -12,8 +13,9 @@ import { toast } from "react-toastify";
 import { z } from "zod";
 import NextAuthProviders from "./NextAuthProviders";
 
-interface Props {
+interface LoginFormProps {
     callbackUrl?: string;
+    className?: string;
 }
 
 const FormSchema = z.object({
@@ -25,7 +27,7 @@ const FormSchema = z.object({
 
 type InputType = z.infer<typeof FormSchema>;
 
-const LoginForm = (props: Props) => {
+const LoginForm = ({ callbackUrl, className = "" }: LoginFormProps) => {
     const router = useRouter();
     const [visiblePass, setVisiblePass] = useState(false);
     const {
@@ -47,38 +49,47 @@ const LoginForm = (props: Props) => {
             return;
         }
         toast.success("Logged in successfully!");
-        router.push(props.callbackUrl ? props.callbackUrl : "/");
+        router.push(callbackUrl ? callbackUrl : "/");
     };
 
     return (
-        <form
-            onSubmit={handleSubmit(onSubmit)}
-            className="flex flex-col gap-2 border rounded-md shadow overflow-hidden w-full"
-        >
-            <div className="p-2 flex flex-col gap-2">
-                <Input label="Email" {...register("email")} errorMessage={errors.email?.message} />
-                <Input
-                    label="Password"
-                    {...register("password")}
-                    type={visiblePass ? "text" : "password"}
-                    errorMessage={errors.password?.message}
-                    endContent={
-                        <button type="button" onClick={() => setVisiblePass((prev) => !prev)}>
-                            {visiblePass ? <EyeSlashIcon className="w-4" /> : <EyeIcon className="w-4" />}
-                        </button>
-                    }
-                />
-                <div className="flex items-center justify-center gap-2">
-                    <Button color="primary" type="submit" disabled={isSubmitting} isLoading={isSubmitting}>
+        <>
+            <form
+                onSubmit={handleSubmit(onSubmit)}
+                className={`flex flex-col items-center overflow-hidden ${className}`}
+            >
+                <NextAuthProviders />
+                <hr className="w-full my-4" />
+                <div className="p-2 flex flex-col gap-4 m-0 p-2 mt-2 ml-2 mr-2">
+                    <h1 className="text-2xl font-bold text-center">Login</h1>
+                    <p className="text-center">To see the content of the website, please log in with your credentials.</p>
+                    <Input label="Email" {...register("email")} errorMessage={errors.email?.message} />
+                    <Input
+                        label="Password"
+                        {...register("password")}
+                        type={visiblePass ? "text" : "password"}
+                        errorMessage={errors.password?.message}
+                        endContent={
+                            <button type="button" onClick={() => setVisiblePass((prev) => !prev)}>
+                                {visiblePass ? <EyeSlashIcon className="w-4" /> : <EyeIcon className="w-4" />}
+                            </button>
+                        }
+                    />
+                    {/* <div className="flex flex-col items-center justify-center gap-2">
+                        <Button className="w-15 shadow-sm backdrop-blur-sm" color="primary" type="submit" disabled={isSubmitting} isLoading={isSubmitting}>
+                            {isSubmitting ? "Logging in..." : "Login"}
+                        </Button>
+                    </div> */}
+                    <div className="flex flex-row items-center justify-center gap-2">
+                        <p>Forgot password?</p>
+                        <Link className="text-[#338DF3]" href={"auth/forgotPass"}>Reset password</Link>
+                    </div>
+                    <Button size="sm" className="shadow-sm backdrop-blur-sm" color="primary" type="submit" disabled={isSubmitting} isLoading={isSubmitting}>
                         {isSubmitting ? "Logging in..." : "Login"}
                     </Button>
-                    <Button as={Link} href="/auth/register">
-                        Register
-                    </Button>
                 </div>
-            </div>
-            <NextAuthProviders />
-        </form>
+            </form>
+        </>
     );
 };
 

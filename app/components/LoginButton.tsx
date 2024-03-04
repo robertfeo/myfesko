@@ -25,8 +25,8 @@ const LoginButton = () => {
                 <>
                     {/* <Button as={Link} href={"api/auth/signin"} color="primary">Log In</Button> */}
                     {/* <Button as={Link} href={"/auth/login"} color="primary">Log In</Button> */}
-                    <Button onClick={() => signIn()} color="primary">Log In</Button>
-                    <Button as={Link} href={"/auth/register"} color="primary">Register</Button>
+                    <Button size="sm" onClick={() => signIn()} color="primary" variant="ghost">Log In</Button>
+                    <Button size="sm" as={Link} href={"/auth/register"} color="primary">Register</Button>
                 </>
             )}
         </div>
