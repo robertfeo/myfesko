@@ -5,17 +5,16 @@ import { signIn } from "next-auth/react";
 
 const NextAuthProviders = () => {
     const googleSignIn = async () => {
-        const result = await signIn("google", {
+        const result = await signIn("Google", {
             callbackUrl: "/",
         });
-        /* console.log({ result }); */
+        console.log({ result });
     };
     return (
         <div className="flex flex-col justify-center items-center gap-3">
             <p>Sign in with</p>
             <div className="flex flex-row justify-center items-center gap-2">
                 <Button size="sm" color="default" onClick={googleSignIn} startContent={<GoogleIcon fontSize="small"/>}>Google</Button>
-                {/* <Button size="sm" onClick={googleSignIn}>Sign in with Google</Button> */}
             </div>
         </div>
     );

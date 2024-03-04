@@ -23,7 +23,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <Providers>
           <AppBar />
-          <div className="min-h-[1080] bg-gray-50">{children}</div>
+          <div className="min-h-screen bg-gray-50">{children}</div>
           {/* {children} */}
           <ToastContainer />
         </Providers>

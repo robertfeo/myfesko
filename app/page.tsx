@@ -8,8 +8,6 @@ export default async function Home() {
 
       <main className="container mx-auto p-4">
         <section>
-          {/* <h2 className="text-2xl font-bold">About Us</h2>
-          <p>This is a personal project created to share with my friends.</p> */}
         </section>
       </main>
 

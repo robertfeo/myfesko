@@ -3,16 +3,26 @@ import { User } from "@prisma/client";
 import { AuthOptions } from "next-auth";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
 
 export const authOptions: AuthOptions = {
     pages: {
         signIn: '/auth/login',
-        verifyRequest: '/auth/verify-request',
     },
     session: {
         strategy: 'jwt',
     },
     providers: [
+        GoogleProvider({
+            clientId: process.env.GOOGLE_CLIENT_ID ?? "",
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? "",
+            idToken: true,
+            authorization: {
+                params: {
+                    scope: "openid profile email",
+                },
+            },
+        }),
         CredentialsProvider({
             name: 'Credentials',
             credentials: {
