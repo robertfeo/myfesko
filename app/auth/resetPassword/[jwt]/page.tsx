@@ -1,13 +1,17 @@
-import { Component } from 'react';
+import ResetPasswordForm from "@/app/components/ResetPasswordForm"
 
-class page extends Component {
-    render() {
-        return (
-            <div>
-
-            </div>
-        );
+interface ResetPasswordPageProps {
+    params: {
+        jwt: string
     }
 }
 
-export default page;
+const ResetPasswordPage = ({ params }: ResetPasswordPageProps) => {
+    return (
+        <div>
+            <ResetPasswordForm jwtUserID={params.jwt} />
+        </div>
+    )
+}
+
+export default ResetPasswordPage
