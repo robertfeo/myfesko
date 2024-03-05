@@ -9,18 +9,20 @@ const LoginButton = () => {
     const { data: session } = useSession();
 
     return (
-        <div className="flex items-center gap-2">
+        <>
             {session && session.user ? (
                 <>
                     <ProfileMenu />
                 </>
             ) : (
                 <>
-                    <Button size="sm" onClick={() => signIn()} color="primary" variant="ghost">Log In</Button>
-                    <Button size="sm" as={Link} href={"/auth/register"} color="primary">Register</Button>
+                    <div className="flex items-center gap-2">
+                        <Button size="sm" onClick={() => signIn()} color="primary" variant="ghost">Log In</Button>
+                        <Button size="sm" as={Link} href={"/auth/register"} color="primary">Register</Button>
+                    </div>
                 </>
             )}
-        </div>
+        </>
     );
 };
 

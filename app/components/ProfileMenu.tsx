@@ -2,12 +2,22 @@
 
 import { Button, Popover, PopoverContent, PopoverTrigger, User } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
+import { useRouter } from 'next/navigation';
 
 const ProfileMenu = () => {
     const { data: session } = useSession();
+    const router = useRouter();
+
+    const handleProfile = () => {
+        router.push("/profile");
+    };
+
+    const handleLogout = () => {
+        router.push("/api/auth/signout");
+    };
 
     return (
-        <div className="flex items-center gap-2">
+        <div className="">
             {session && session.user ? (
                 <>
                     <Popover placement="bottom" showArrow offset={10}>
@@ -20,14 +30,13 @@ const ProfileMenu = () => {
                                 avatarProps={{ src: `${session.user.image}` }}
                             />
                         </PopoverTrigger>
-                        <PopoverContent className="w-[240px]">
-                            <div className="px-1 py-2 w-full">
-                                <div className="mt-2 flex flex-col gap-2 justify-center items-center">
-                                    <p>Settings</p>
-                                    <div className="flex flex-col gap-2 m-0 p-0">
-                                        <Button className="w-full" size="sm" variant="light" href={"/profile"}>Profile</Button>
-                                        <Button className="w-full" size="sm" variant="light" href={"/api/auth/signout"}>Log Out</Button>
-                                    </div>
+                        <PopoverContent className="w-[200px]">
+                            <div className="">
+                                <p>Settings</p>
+                                <div className="">
+                                    <Button onClick={handleProfile} size="sm" variant="light">Profile</Button>
+                                    <Button onClick={handleLogout} size="sm" variant="light">Log Out</Button>
+                                    <button ></button>
                                 </div>
                             </div>
                         </PopoverContent>
