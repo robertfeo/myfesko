@@ -2,9 +2,11 @@ export { default } from "next-auth/middleware";
 
 export const config = {
     matcher: [
-        "/profile/:path*",
-        "/admin/:path*",
+        "/profile/(.*)",
+        "/admin/(.*)",
         "/",
+        "/api/(.*)",
+        "/chat/(.*)",
     ],
     redirect: true,
     redirectUrl: "/auth/login",
@@ -12,4 +14,5 @@ export const config = {
     redirectIfAuthenticated: true,
     setReturnTo: true,
     baseUrl: "/",
+    basePath: "/",
 };

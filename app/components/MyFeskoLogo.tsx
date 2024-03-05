@@ -1,12 +1,13 @@
-"use client";
+import { Image } from "@nextui-org/react";
 
-export const MyFeskoLogo = () => (
-    <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-        width="2882.000000pt" height="1153.000000pt" viewBox="0 0 2882.000000 1153.000000"
-        preserveAspectRatio="xMidYMid meet">
-
-        <g transform="translate(0.000000,1153.000000) scale(0.100000,-0.100000)"
-            fill="#000000" stroke="none">
-        </g>
-    </svg>
-);
+export const MyFeskoLogo = () => {
+    return (
+        <Image isBlurred
+            src="https://app.requestly.io/delay/500/https://i.imgur.com/vjv3Jed.png"
+            fallbackSrc="https://via.placeholder.com/300x200"
+            alt="MyFesko"
+            width={100}
+            style={{ pointerEvents: 'none' }}
+        />
+    );
+}
