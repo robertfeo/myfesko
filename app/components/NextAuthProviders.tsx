@@ -2,20 +2,31 @@ import GoogleIcon from '@mui/icons-material/Google';
 
 import { Button } from "@nextui-org/react";
 import { signIn } from "next-auth/react";
-import { toast } from 'react-toastify';
+import { useRouter } from 'next/navigation';
+import { toast } from "react-hot-toast";
 
 const NextAuthProviders = () => {
+    const router = useRouter();
+
     const googleSignIn = async () => {
+        await toast.promise(
+            submitLoginData(),
+            {
+                loading: 'Logging in...',
+                success: <p>Successfully logged in!</p>,
+                error: <p>Unable to log you in. Please try again later.</p>,
+            }
+        );
+        router.push("/");
+    };
+
+    const submitLoginData = async () => {
         const result = await signIn("google", {
-            redirect: true,
+            redirect: false,
             callbackUrl: "/",
         });
-        if (!result?.ok) {
-            toast.error(result?.error);
-            return;
-        }
-        toast.success("Logged in successfully!");
-    };
+        return result;
+    }
 
     return (
         <div className="flex flex-col justify-center items-center gap-3">

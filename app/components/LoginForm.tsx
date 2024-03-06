@@ -9,7 +9,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { toast } from "react-toastify";
+
+import toast from "react-hot-toast";
 import { z } from "zod";
 import NextAuthProviders from "./NextAuthProviders";
 
@@ -29,7 +30,9 @@ type InputType = z.infer<typeof FormSchema>;
 
 const LoginForm = ({ callbackUrl, className = "" }: LoginFormProps) => {
     const router = useRouter();
+
     const [visiblePass, setVisiblePass] = useState(false);
+
     const {
         register,
         handleSubmit,
@@ -38,28 +41,26 @@ const LoginForm = ({ callbackUrl, className = "" }: LoginFormProps) => {
         resolver: zodResolver(FormSchema),
     });
 
-    const onSubmit: SubmitHandler<InputType> = async (data) => {
-        const result = await signIn("credentials", {
-            redirect: true,
-            callbackUrl: callbackUrl ? callbackUrl : "/",
+    const submitLoginData = async (data: InputType) => {
+        const result = signIn("credentials", {
+            redirect: false,
+            /* callbackUrl: callbackUrl ? callbackUrl : "/", */
             username: data.email,
             password: data.password,
         });
-        if (!result?.ok) {
-            toast.error(result?.error);
-            return;
-        }
-        toast.promise(
-            new Promise((resolve) => {
-                setTimeout(() => {
-                    resolve("Logged in successfully");
-                }, 1000);
-            }),
+        return result;
+    }
+
+    const onSubmit: SubmitHandler<InputType> = async (data) => {
+        await toast.promise(
+            submitLoginData(data),
             {
-                success: "Logged in successfully",
-                error: "An error occurred while logging in",
+                loading: 'Logging in...',
+                success: <p>Successfully logged in!</p>,
+                error: <p>Unable to log you in. Please try again later.</p>,
             }
         );
+        router.push(callbackUrl ? callbackUrl : "/");
     };
 
     return (

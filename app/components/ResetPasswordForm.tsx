@@ -7,7 +7,7 @@ import { Button, Input } from "@nextui-org/react";
 import { passwordStrength } from "check-password-strength";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import { z } from "zod";
 import PasswordStrength from "./PasswordStrength";
 

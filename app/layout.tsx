@@ -1,7 +1,7 @@
+/* eslint-disable react/jsx-no-undef */
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { Toaster } from "react-hot-toast";
 import AppBar from "./components/AppBar";
 import "./globals.css";
 import { Providers } from "./providers";
@@ -25,7 +25,7 @@ export default function RootLayout({
           <div className="min-h-screen bg-gray-50">
             <AppBar />
             {children}
-            <ToastContainer />
+            <Toaster position="top-right" />
           </div>
         </Providers>
       </body>

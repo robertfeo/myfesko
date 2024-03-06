@@ -34,7 +34,7 @@ const ProfileMenu = () => {
                             />
                         </PopoverTrigger>
                         <PopoverContent className="w-[200px] p-1">
-                            <Listbox aria-label="" variant="faded">
+                            <Listbox aria-label="profilemenu" variant="faded">
                                 <ListboxItem startContent={<UserIcon className={iconClasses} />} onClick={handleProfile} key="profile">Profile</ListboxItem>
                                 <ListboxItem startContent={<ArrowLeftEndOnRectangleIcon className={iconClasses} />} onClick={handleLogout} key="logout">Log Out</ListboxItem>
                             </Listbox>
