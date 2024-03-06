@@ -1,3 +1,4 @@
+
 export { default } from "next-auth/middleware";
 
 export const config = {
@@ -9,8 +10,12 @@ export const config = {
         "/chat/:path*",
     ],
     redirect: true,
-    redirectUrl: "/auth/login",
-    redirectIfUnauthenticated: true,
-    redirectIfAuthenticated: true,
-    redirectTo: "/",
+    redirectUrl: "/auth/login"
 };
+
+/* export async function middleware(request: NextRequest) {
+	const token = await getToken({ req: request });
+	if (!token && process.env.NEXTAUTH_URL) {
+		return NextResponse.redirect(process.env.NEXTAUTH_URL);
+	}
+} */

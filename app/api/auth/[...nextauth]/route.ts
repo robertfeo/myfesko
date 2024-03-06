@@ -11,18 +11,13 @@ export const authOptions: AuthOptions = {
     },
     session: {
         strategy: 'jwt',
-        maxAge: 30 * 24 * 60 * 60, // 30 days
+        maxAge: 10 * 24 * 60 * 60, // 10 days
     },
     providers: [
         GoogleProvider({
-            clientId: process.env.GOOGLE_CLIENT_ID ?? "",
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? "",
-            idToken: true,
-            authorization: {
-                params: {
-                    scope: "openid profile email",
-                },
-            },
+            name: 'Google',
+            clientId: process.env.AUTH_GOOGLE_ID!,
+            clientSecret: process.env.AUTH_GOOGLE_SECRET!,
         }),
         CredentialsProvider({
             name: 'Credentials',

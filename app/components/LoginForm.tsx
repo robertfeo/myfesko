@@ -40,7 +40,8 @@ const LoginForm = ({ callbackUrl, className = "" }: LoginFormProps) => {
 
     const onSubmit: SubmitHandler<InputType> = async (data) => {
         const result = await signIn("credentials", {
-            redirect: false,
+            redirect: true,
+            callbackUrl: callbackUrl ? callbackUrl : "/",
             username: data.email,
             password: data.password,
         });
@@ -48,8 +49,17 @@ const LoginForm = ({ callbackUrl, className = "" }: LoginFormProps) => {
             toast.error(result?.error);
             return;
         }
-        toast.success("Logged in successfully!");
-        router.push(callbackUrl ? callbackUrl : "/");
+        toast.promise(
+            new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve("Logged in successfully");
+                }, 1000);
+            }),
+            {
+                success: "Logged in successfully",
+                error: "An error occurred while logging in",
+            }
+        );
     };
 
     return (

@@ -3,7 +3,7 @@
 
 import { ArrowLeftEndOnRectangleIcon, UserIcon } from "@heroicons/react/20/solid";
 import { Listbox, ListboxItem, Popover, PopoverContent, PopoverTrigger, User } from "@nextui-org/react";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useRouter } from 'next/navigation';
 
 const ProfileMenu = () => {
@@ -16,7 +16,7 @@ const ProfileMenu = () => {
     };
 
     const handleLogout = () => {
-        router.push("/api/auth/signout");
+        signOut();
     };
 
     return (
@@ -34,11 +34,7 @@ const ProfileMenu = () => {
                             />
                         </PopoverTrigger>
                         <PopoverContent className="w-[200px] p-1">
-                            {/* <DropdownMenu aria-label="Settings">
-                                <DropdownItem onClick={handleProfile} variant="light" key="profile">Profile</DropdownItem>
-                                <DropdownItem onClick={handleLogout} variant="light" key="logout">Log Out</DropdownItem>
-                            </DropdownMenu> */}
-                            <Listbox variant="faded">
+                            <Listbox aria-label="" variant="faded">
                                 <ListboxItem startContent={<UserIcon className={iconClasses} />} onClick={handleProfile} key="profile">Profile</ListboxItem>
                                 <ListboxItem startContent={<ArrowLeftEndOnRectangleIcon className={iconClasses} />} onClick={handleLogout} key="logout">Log Out</ListboxItem>
                             </Listbox>
