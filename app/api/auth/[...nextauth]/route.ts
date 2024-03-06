@@ -1,5 +1,6 @@
 import prisma from "@/lib/prisma";
 import { User } from "@prisma/client";
+import bcrypt from "bcrypt";
 import { AuthOptions } from "next-auth";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -49,14 +50,61 @@ export const authOptions: AuthOptions = {
     ],
 
     callbacks: {
+        async signIn({ account, user }) {
+            if (account!.provider === "google") {
+                const verifyUserExists = await prisma.user.findUnique({
+                    where: {
+                        email: user.email as string
+                    }
+                })
+                if (!verifyUserExists) {
+                    const fullName = user.name as string;
+                    const nameParts = fullName.trim().split(/\s+/);
+                    const firstName = nameParts.shift();
+                    const lastName = nameParts.join(' ');
+                    await prisma.user.upsert({
+                        where: {
+                            email: user.email as string
+                        },
+                        create: {
+                            email: user.email as string,
+                            firstName: firstName as string,
+                            lastName: lastName as string,
+                            password: await bcrypt.hash(process.env.RANDOM_PASSWORD!, 10),
+                            emailVerified: new Date(),
+                            image: user.image as string,
+                        },
+                        update: {
+                            email: user.email as string,
+                            firstName: firstName as string,
+                            lastName: lastName as string,
+                            emailVerified: new Date(),
+                            image: user.image as string,
+                        }
+                    })
+                }
+                console.log('Google account: ', account?.provider + ' ' + user.name + ' ' + user.email)
+            }
+            return true
+        },
         // take user object and put in token object
-        async jwt({ token, user }) {
+        async jwt({ token, user, profile }) {
+            if (profile) {
+                const user = await prisma.user.findUnique({
+                    where: {
+                        email: profile.email,
+                    },
+                })
+                if (!user) {
+                    throw new Error('No user found')
+                }
+                token.user = user as User;
+            }
             if (user) {
                 token.user = user as User;
             }
             return token;
         },
-
         // take token object and put in session object
         async session({ token, session }) {
             session.user = token.user;
@@ -66,5 +114,4 @@ export const authOptions: AuthOptions = {
 }
 
 const handler = NextAuth(authOptions)
-
 export { handler as GET, handler as POST };

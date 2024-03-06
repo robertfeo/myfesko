@@ -8,12 +8,12 @@ const ProfilePage = async () => {
 
     return (
         <div className="flex flex-col gap-3 items-center">
-            {session && user ? (
+            {session && session.user ? (
                 <>
                     <h1>Profile</h1>
-                    <p>First Name: {user.firstName}</p>
-                    <p>Email: {user.email}</p>
-                    <p>Phone: {user.phoneNumber}</p>
+                    <p>First Name: {session.user.firstName}</p>
+                    <p>Email: {session.user.email}</p>
+                    <p>Phone: {session.user.phoneNumber}</p>
                 </>
             ) : (
                 <h1>Not logged in</h1>

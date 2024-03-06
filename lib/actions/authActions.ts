@@ -68,7 +68,7 @@ export async function forgotPassword(email: string) {
 
 type ResetPasswordFunc = (jwtUserID: string, password: string) => Promise<"userNotExist" | "success">;
 
-export const resetPassword:ResetPasswordFunc = async (jwtUserID: string, password: string) => {
+export const resetPassword: ResetPasswordFunc = async (jwtUserID: string, password: string) => {
     try {
         const payload = verifyJWT(jwtUserID);
         if (!payload) return "userNotExist";

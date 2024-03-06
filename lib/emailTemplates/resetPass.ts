@@ -292,4 +292,4 @@ export const resetTemplate = `<!DOCTYPE html>
 	</table><!-- End -->
 </body>
 
-</html>`
+</html>`        

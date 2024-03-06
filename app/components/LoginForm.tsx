@@ -48,6 +48,9 @@ const LoginForm = ({ callbackUrl, className = "" }: LoginFormProps) => {
             username: data.email,
             password: data.password,
         });
+        if (!result) {
+            return "error"
+        }
         return result;
     }
 
