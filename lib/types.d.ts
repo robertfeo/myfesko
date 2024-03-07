@@ -15,8 +15,3 @@ declare module "next-auth/jwt" {
         session: Session;
     }
 }
-
-/* declare module '*.handlebars' {
-    const template: (context: any) => string;
-    export default template;
-} */

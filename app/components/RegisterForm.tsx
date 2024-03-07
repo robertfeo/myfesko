@@ -19,11 +19,11 @@ import { z } from "zod";
 import PasswordStrength from "./PasswordStrength";
 
 const FormSchema = z.object({
-    firstName: z.string()
+    firstname: z.string()
         .min(2, "First Name must be at least 2 characters long.")
         .max(45, "First Name must be at most 45 characters long.")
         .regex(new RegExp("^[a-zA-Z+]+$"), "No special characters allowed!"),
-    lastName: z.string()
+    lastname: z.string()
         .min(2, "First Name must be at least 2 characters long.")
         .max(45, "First Name must be at most 45 characters long.")
         .regex(new RegExp("^[a-zA-Z+]+$"), "No special characters allowed!"),
@@ -71,8 +71,8 @@ const RegisterForm = () => {
 
     return (
         <form onSubmit={handleSubmit(saveUser)} className="grid grid-cols-2 gap-3 p-5 justify-center items-center">
-            <Input size="sm" errorMessage={errors.firstName?.message} isInvalid={!!errors.firstName} {...register("firstName")} label="First Name" startContent={<UserIcon className="w-4"></UserIcon>}></Input>
-            <Input size="sm" errorMessage={errors.lastName?.message} isInvalid={!!errors.lastName} {...register("lastName")} label="Last Name" startContent={<UserIcon className="w-4"></UserIcon>}></Input>
+            <Input size="sm" errorMessage={errors.firstname?.message} isInvalid={!!errors.firstname} {...register("firstname")} label="First Name" startContent={<UserIcon className="w-4"></UserIcon>}></Input>
+            <Input size="sm" errorMessage={errors.lastname?.message} isInvalid={!!errors.lastname} {...register("lastname")} label="Last Name" startContent={<UserIcon className="w-4"></UserIcon>}></Input>
             <Input size="sm" errorMessage={errors.email?.message} isInvalid={!!errors.email} {...register("email")} className="col-span-2" type="email" label="Email" startContent={<EnvelopeIcon className="w-4"></EnvelopeIcon>}></Input>
             <Input size="sm" errorMessage={errors.phoneNumber?.message} isInvalid={!!errors.phoneNumber} {...register("phoneNumber")} className="col-span-2" type="phone" label="Phone" startContent={<PhoneIcon className="w-4"></PhoneIcon>}></Input>
             <Input size="sm" errorMessage={errors.password?.message} isInvalid={!!errors.password} {...register("password")} className="col-span-2" type={isVisiblePass ? "text" : "password"} label="Password" startContent={<LockClosedIcon className="w-4" />}

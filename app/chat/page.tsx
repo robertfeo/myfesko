@@ -9,7 +9,7 @@ const ChatPage = async () => {
     return (
         <div className="flex flex-col items-center">
             <h1>Chat</h1>
-            <p>Welcome, {user?.firstName}!</p>
+            <p>Welcome, {user?.firstname}!</p>
         </div>
     );
 };

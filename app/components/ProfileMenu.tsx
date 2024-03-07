@@ -13,9 +13,10 @@ const ProfileMenu = () => {
 
     const handleProfile = () => {
         router.push("/profile");
+        console.log({ session });
     };
 
-    const handleLogout = () => {
+    async function handleLogout() {
         signOut();
     };
 
@@ -27,7 +28,7 @@ const ProfileMenu = () => {
                         <PopoverTrigger>
                             <User
                                 as="button"
-                                name={`${session.user.firstName} ${session.user.lastName}`}
+                                name={`${session.user.firstname } ${session.user.lastname}`}
                                 description={`${session.user.email}`}
                                 className="transition-transform"
                                 avatarProps={{ src: `${session.user.image}` }}

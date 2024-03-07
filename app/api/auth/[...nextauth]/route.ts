@@ -1,3 +1,4 @@
+import { generateRandomPassword } from "@/lib/actions/authActions";
 import prisma from "@/lib/prisma";
 import { User } from "@prisma/client";
 import bcrypt from "bcrypt";
@@ -12,13 +13,23 @@ export const authOptions: AuthOptions = {
     },
     session: {
         strategy: 'jwt',
-        maxAge: 10 * 24 * 60 * 60, // 10 days
+        maxAge: 10 * 24 * 60 * 60,
     },
     providers: [
         GoogleProvider({
             name: 'Google',
             clientId: process.env.AUTH_GOOGLE_ID!,
             clientSecret: process.env.AUTH_GOOGLE_SECRET!,
+            profile(profile) {
+                return {
+                    id: profile.sub,
+                    firstname: profile.given_name,
+                    lastname: profile.family_name,
+                    email: profile.email,
+                    image: profile.picture,
+                    emailVerified: profile.email_verified,
+                };
+            },
         }),
         CredentialsProvider({
             name: 'Credentials',
@@ -52,66 +63,43 @@ export const authOptions: AuthOptions = {
     callbacks: {
         async signIn({ account, user }) {
             if (account!.provider === "google") {
-                const verifyUserExists = await prisma.user.findUnique({
-                    where: {
-                        email: user.email as string
-                    }
-                })
-                if (!verifyUserExists) {
-                    const fullName = user.name as string;
-                    const nameParts = fullName.trim().split(/\s+/);
-                    const firstName = nameParts.shift();
-                    const lastName = nameParts.join(' ');
-                    await prisma.user.upsert({
+                if (user) {
+                    const userSignedIn = user as User;
+                    const searchUser = await prisma.user.findUnique({
                         where: {
-                            email: user.email as string
-                        },
-                        create: {
-                            email: user.email as string,
-                            firstName: firstName as string,
-                            lastName: lastName as string,
-                            password: await bcrypt.hash(process.env.RANDOM_PASSWORD!, 10),
-                            emailVerified: new Date(),
-                            image: user.image as string,
-                        },
-                        update: {
-                            email: user.email as string,
-                            firstName: firstName as string,
-                            lastName: lastName as string,
-                            emailVerified: new Date(),
-                            image: user.image as string,
+                            email: userSignedIn!.email!
                         }
-                    })
+                    });
+                    if (userSignedIn.emailVerified && !searchUser) {
+                        await prisma.user.create({
+                            data: {
+                                email: user.email!,
+                                firstname: userSignedIn.firstname as string,
+                                lastname: userSignedIn.lastname,
+                                image: userSignedIn.image,
+                                password: await bcrypt.hash(await generateRandomPassword(user.email as string), 10),
+                                emailVerified: new Date(),
+                            }
+                        })
+                    }
                 }
-                console.log('Google account: ', account?.provider + ' ' + user.name + ' ' + user.email)
             }
             return true
         },
-        // take user object and put in token object
-        async jwt({ token, user, profile }) {
-            if (profile) {
-                const user = await prisma.user.findUnique({
-                    where: {
-                        email: profile.email,
-                    },
-                })
-                if (!user) {
-                    throw new Error('No user found')
-                }
-                token.user = user as User;
-            }
-            if (user) {
-                token.user = user as User;
-            }
+        async jwt({ token, user }) {
+            if (user) token.user = user as User;
             return token;
         },
-        // take token object and put in session object
         async session({ token, session }) {
+            if (token?.user) {
+                session.user = token.user;
+            }
             session.user = token.user;
             return session;
-        }
+        },
     }
 }
 
 const handler = NextAuth(authOptions)
 export { handler as GET, handler as POST };
+

@@ -1,6 +1,7 @@
 import Handlebar from 'handlebars';
 import nodemailer from 'nodemailer';
 import { activationTemplate } from './emailTemplates/activation';
+import { googleSignedInPassword } from './emailTemplates/googleSignedInPassword';
 import { resetTemplate } from './emailTemplates/resetPass';
 
 export async function sendMail({ to, subject, body }: { to: string, subject: string, body: string }) {
@@ -35,5 +36,11 @@ export function compileActivationTemplate(name: string, url: string) {
 export function compileResetTemplate(name: string, url: string) {
     const template = Handlebar.compile(resetTemplate)
     const htmlBody = template({ name, url })
+    return htmlBody
+}
+
+export function compileSignedWithGooglePassword(generated_password: string) {
+    const template = Handlebar.compile(googleSignedInPassword)
+    const htmlBody = template({ generated_password })
     return htmlBody
 }
