@@ -7,10 +7,12 @@ const ChatPage = async () => {
     const user = session?.user;
 
     return (
-        <div className="flex flex-col items-center">
-            <h1>Chat</h1>
-            <p>Welcome, {user?.firstname}!</p>
-        </div>
+        <>
+            <div className="flex flex-col items-center">
+                <h1>Chat</h1>
+                <p>Welcome, {user?.firstname}!</p>
+            </div>
+        </>
     );
 };
 
