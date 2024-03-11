@@ -1,13 +1,17 @@
+/* eslint-disable react/jsx-no-undef */
 'use client'
 
-import { NextUIProvider } from '@nextui-org/react'
-import { SessionProvider } from 'next-auth/react'
+import { NextUIProvider } from '@nextui-org/react';
+import { SessionProvider, SessionProviderProps } from 'next-auth/react';
+import { ThemeProvider as NextThemesProvider } from "next-themes";
 
-export function Providers({ children }: { children: React.ReactNode }) {
+export function Providers({ children }: { children: React.ReactNode }, session : SessionProviderProps) {
     return (
-        <SessionProvider>
+        <SessionProvider session={session.session}>
             <NextUIProvider>
-                {children}
+                <NextThemesProvider attribute="class" defaultTheme="light">
+                    {children}
+                </NextThemesProvider>
             </NextUIProvider>
         </SessionProvider>
     )

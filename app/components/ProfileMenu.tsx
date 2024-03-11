@@ -1,18 +1,18 @@
 /* eslint-disable react/jsx-no-undef */
 "use client";
 
-import { ArrowLeftEndOnRectangleIcon, UserIcon } from "@heroicons/react/20/solid";
-import { Listbox, ListboxItem, Popover, PopoverContent, PopoverTrigger, User } from "@nextui-org/react";
+import { Avatar, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-org/react";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from 'next/navigation';
 
 const ProfileMenu = () => {
     const { data: session } = useSession();
     const router = useRouter();
-    const iconClasses = "w-4 text-sm text-default-500 pointer-events-none flex-shrink-0";
 
-    const handleProfile = () => {
-        router.push("/profile");
+    const handleSettings = () => {
+        if (session?.user) {
+            router.push(`settings/${session!.user.id}`);
+        }
     };
 
     async function handleLogout() {
@@ -20,26 +20,37 @@ const ProfileMenu = () => {
     };
 
     return (
-        <div className="mt-1">
+        <div>
             {session && session.user ? (
                 <>
-                    <Popover placement="bottom" showArrow offset={10}>
-                        <PopoverTrigger>
-                            <User
+                    <Dropdown placement="bottom-end" backdrop="blur">
+                        <DropdownTrigger>
+                            <Avatar
+                                isBordered
                                 as="button"
-                                name={`${session.user.firstname } ${session.user.lastname}`}
-                                description={`${session.user.email}`}
-                                className="transition-transform"
-                                avatarProps={{ src: `${session.user.image!}` }}
+                                className="transition-transform shadow-md shadow-green-900/20"
+                                color="success"
+                                name={`${session.user.firstname} ${session.user.lastname}`}
+                                size="sm"
+                                src={`${session.user.image!}` || "https://via.placeholder.com/150"}
                             />
-                        </PopoverTrigger>
-                        <PopoverContent className="w-[200px] p-1">
-                            <Listbox aria-label="profilemenu" variant="faded">
-                                <ListboxItem startContent={<UserIcon className={iconClasses} />} onClick={handleProfile} key="profile">Profile</ListboxItem>
-                                <ListboxItem startContent={<ArrowLeftEndOnRectangleIcon className={iconClasses} />} onClick={handleLogout} key="logout">Log Out</ListboxItem>
-                            </Listbox>
-                        </PopoverContent>
-                    </Popover>
+                        </DropdownTrigger>
+                        <DropdownMenu aria-label="Profile Actions" variant="flat">
+                            <DropdownItem key="profile" className="h-14 gap-2" >
+                                <p className="font-semibold">Logged in as</p>
+                                <p className="font-semibold">{session.user.email}</p>
+                            </DropdownItem>
+                            <DropdownItem key="settings" onClick={handleSettings}>My Settings</DropdownItem>
+                            {/* <DropdownItem key="team_settings">Team Settings</DropdownItem>
+                            <DropdownItem key="analytics">Analytics</DropdownItem>
+                            <DropdownItem key="system">System</DropdownItem>
+                            <DropdownItem key="configurations">Configurations</DropdownItem>
+                            <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem> */}
+                            <DropdownItem textValue="" key="logout" onClick={handleLogout} color="danger">
+                                Log Out
+                            </DropdownItem>
+                        </DropdownMenu>
+                    </Dropdown>
                 </>
             ) : (
                 <>

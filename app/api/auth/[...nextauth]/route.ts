@@ -7,7 +7,24 @@ import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 
+const winston = require("winston");
+
+const logger = winston.createLogger({
+    transports: [new winston.transports.Console()],
+});
+
 export const authOptions: AuthOptions = {
+    logger: {
+        error(code, metadata) {
+            logger.error(code, metadata)
+        },
+        warn(code) {
+            logger.warn(code)
+        },
+        debug(code, metadata) {
+            logger.debug(code, metadata)
+        }
+    },
     pages: {
         signIn: '/auth/login',
     },

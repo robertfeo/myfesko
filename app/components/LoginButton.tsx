@@ -17,7 +17,7 @@ const LoginButton = () => {
             ) : (
                 <>
                     <div className="flex items-center gap-2">
-                        <Button size="sm" onClick={() => signIn()} color="primary" variant="ghost">Log In</Button>
+                        <Button size="sm" onClick={() => signIn()} color="default" variant="light">Log In</Button>
                         <Button size="sm" as={Link} href={"/auth/register"} color="primary">Register</Button>
                     </div>
                 </>

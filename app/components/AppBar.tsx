@@ -6,11 +6,11 @@ import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@nextui-org/reac
 import Link from "next/link";
 import LoginButton from "./LoginButton";
 import { MyFeskoLogo } from "./MyFeskoLogo";
+import { ThemeSwitcher } from "./ThemeSwitcher";
 
 const AppBar = () => {
-
     return (
-        <Navbar isBordered>
+        <Navbar isBlurred shouldHideOnScroll>
             <NavbarContent>
                 <NavbarBrand>
                     <MyFeskoLogo />
@@ -18,18 +18,19 @@ const AppBar = () => {
             </NavbarContent>
             <NavbarContent className="hidden sm:flex gap-4" justify="center">
                 <NavbarItem>
-                    <Link className="hover:text-sky-500" href="/">
+                    <Link className="hover:text-sky-500 transition duration-300 ease-in-out" href="/">
                         Home
                     </Link>
                 </NavbarItem>
                 <NavbarItem>
-                    <Link className="hover:text-sky-500" href="/chat">
+                    <Link className="hover:text-sky-500 transition duration-300 ease-in-out" href="/chat">
                         Chat
                     </Link>
                 </NavbarItem>
             </NavbarContent>
-            <NavbarContent justify="end">
-                <NavbarItem>
+            <NavbarContent as="div" justify="end">
+                <NavbarItem className="flex flex-row justify-center gap-3">
+                    <ThemeSwitcher />
                     <LoginButton />
                 </NavbarItem>
             </NavbarContent>
