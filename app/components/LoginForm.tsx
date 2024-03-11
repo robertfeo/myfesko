@@ -19,7 +19,6 @@ import NextAuthProviders from "./NextAuthProviders";
 interface LoginFormProps {
     callbackUrl?: string;
     className?: string;
-    dataSitekey: string;
 }
 
 const FormSchema = z.object({
@@ -31,9 +30,9 @@ const FormSchema = z.object({
 
 type InputType = z.infer<typeof FormSchema>;
 
-const LoginForm = ({ dataSitekey, callbackUrl, className = "" }: LoginFormProps) => {
+const LoginForm = ({ callbackUrl, className = "" }: LoginFormProps) => {
     const router = useRouter();
-    const [visiblePass, setVisiblePass] = useState(false);
+    const [visiblePass, setVisiblePass] = useState<boolean>(false);
     const [token, setToken] = useState<string | null>(null)
 
     const {
@@ -53,20 +52,19 @@ const LoginForm = ({ dataSitekey, callbackUrl, className = "" }: LoginFormProps)
             if (!verifyTurnstileToken) {
                 toast.error("Please verify you are not a robot.");
                 return;
-            } else {
-                const result = await signIn("credentials", {
-                    redirect: false,
-                    username: data.email,
-                    password: data.password,
-                });
-                if (!result?.ok) {
-                    toast.error(result?.error!);
-                    return;
-                }
-                if (result?.status === 200) {
-                    toast.success("Logged in successfully!");
-                    router.push(callbackUrl ? callbackUrl : "/");
-                }
+            }
+            const result = await signIn("credentials", {
+                redirect: false,
+                username: data.email,
+                password: data.password,
+            });
+            if (!result?.ok) {
+                toast.error(result?.error!);
+                return;
+            }
+            if (result?.status === 200) {
+                toast.success("Logged in successfully!");
+                router.push(callbackUrl ? callbackUrl : "/");
             }
         }
     };

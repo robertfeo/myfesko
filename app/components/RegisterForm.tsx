@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-no-undef */
 "use client";
-import { registerUser } from "@/lib/actions/authActions";
+import { registerUser, verifyTurnstile } from "@/lib/actions/authActions";
 import {
     EnvelopeIcon,
     EyeIcon,
@@ -64,7 +64,7 @@ const RegisterForm = () => {
     const toggleVisiblePass = () => setIsVisiblePass(prev => !prev)
 
     const saveUser: SubmitHandler<InputType> = async (data) => {
-        /* if (!token) {
+        if (!token) {
             toast.error("Please verify you are not a robot.")
             return
         }
@@ -72,10 +72,14 @@ const RegisterForm = () => {
         if (!verifyTurnstileToken) {
             toast.error("Please verify you are not a robot.");
             return;
-        } */
+        }
         const { acceptedTerms, confirmPassword, ...user } = data
         try {
             const result = await registerUser(user, token!)
+            if (!result) {
+                toast.error("An error occurred while registering the user.")
+                return
+            }
             toast.success("User registered successfully!")
         } catch (error) {
             toast.error("An error occurred while registering the user.")
