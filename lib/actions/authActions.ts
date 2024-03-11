@@ -5,8 +5,24 @@ import { signJWT, verifyJWT } from "../jwt";
 import { compileActivationTemplate, compileResetTemplate, compileSignedWithGooglePassword, sendMail } from "../mail";
 const prisma = new PrismaClient();
 
-export async function registerUser(user: Omit<User, "id" | "emailVerified" | "image">) {
+export async function verifyTurnstile(token: string): Promise<boolean> {
+    const secretKey = process.env.CLOUDFLARE_TURNSTILE_SECRET_KEY;
+    const response = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `secret=${secretKey}&response=${token}`,
+    });
+    const data = await response.json();
+    return data.success;
+}
+
+
+export async function registerUser(user: Omit<User, "id" | "emailVerified" | "image">, turnstileToken: string) {
     try {
+        const isVerified = await verifyTurnstile(turnstileToken);
+        if (!isVerified) throw new Error('CAPTCHA verification failed.');
         var bcrypt = require('bcryptjs');
         const result = await prisma.user.create({
             data: {
@@ -25,7 +41,7 @@ export async function registerUser(user: Omit<User, "id" | "emailVerified" | "im
         });
         return result
     } catch (error) {
-        console.error("Error registering user:", error);
+        console.error("Error registering user: ", error);
         throw error;
     }
 }

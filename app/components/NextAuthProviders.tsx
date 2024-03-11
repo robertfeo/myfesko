@@ -1,9 +1,9 @@
-import GoogleIcon from '@mui/icons-material/Google';
+/* eslint-disable react/jsx-no-undef */
 
-import { Button } from "@nextui-org/react";
 import { signIn } from "next-auth/react";
 import { useRouter } from 'next/navigation';
 import { toast } from "react-hot-toast";
+import { GoogleLoginButton } from "react-social-login-buttons";
 
 const NextAuthProviders = () => {
     const router = useRouter();
@@ -29,11 +29,16 @@ const NextAuthProviders = () => {
     }
 
     return (
-        <div className="flex flex-col justify-center items-center gap-3">
-            <p>Sign in with</p>
-            <div className="flex flex-row justify-center items-center gap-2">
-                <Button size="sm" color="default" onClick={googleSignIn} startContent={<GoogleIcon fontSize="small" />}>Google</Button>
-            </div>
+        <div className="flex flex-col justify-center items-center gap-3 m-auto">
+            <p className="text-md">Sign in with</p>
+            <GoogleLoginButton
+                className="font-medium"
+                style={{ fontSize: '13px', borderRadius: '10px', width: '180px'}}
+                align="center"
+                size="32px"
+                iconSize="17px"
+                onClick={googleSignIn}
+            />
         </div>
     );
 };

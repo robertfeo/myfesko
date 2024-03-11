@@ -1,8 +1,9 @@
-import Handlebar from 'handlebars';
 import nodemailer from 'nodemailer';
 import { activationTemplate } from './emailTemplates/activation';
 import { googleSignedInPassword } from './emailTemplates/googleSignedInPassword';
 import { resetTemplate } from './emailTemplates/resetPass';
+
+var handlebars = require('handlebars');
 
 export async function sendMail({ to, subject, body }: { to: string, subject: string, body: string }) {
     const { SMTP_EMAIL, SMTP_GMAIL_EMAIL, SMTP_GMAIL_PASSWORD, SMTP_USER, SMTP_PASS } = process.env
@@ -28,19 +29,19 @@ export async function sendMail({ to, subject, body }: { to: string, subject: str
 }
 
 export function compileActivationTemplate(name: string, url: string) {
-    const template = Handlebar.compile(activationTemplate)
+    const template = handlebars.compile(activationTemplate)
     const htmlBody = template({ name, url })
     return htmlBody
 }
 
 export function compileResetTemplate(name: string, url: string) {
-    const template = Handlebar.compile(resetTemplate)
+    const template = handlebars.compile(resetTemplate)
     const htmlBody = template({ name, url })
     return htmlBody
 }
 
 export function compileSignedWithGooglePassword(generated_password: string) {
-    const template = Handlebar.compile(googleSignedInPassword)
+    const template = handlebars.compile(googleSignedInPassword)
     const htmlBody = template({ generated_password })
     return htmlBody
 }
