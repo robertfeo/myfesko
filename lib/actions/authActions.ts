@@ -1,6 +1,7 @@
 'use server'
 
 import { User } from "@prisma/client";
+import bcrypt from 'bcrypt';
 import { signJWT, verifyJWT } from "../jwt";
 import { compileActivationTemplate, compileResetTemplate, compileSignedWithGooglePassword, sendMail } from "../mail";
 import prisma from "../prisma";
@@ -22,7 +23,7 @@ export async function registerUser(user: Omit<User, "id" | "emailVerified" | "im
     try {
         const isVerified = await verifyTurnstile(turnstileToken);
         if (!isVerified) throw new Error('CAPTCHA verification failed.');
-        var bcrypt = require('bcryptjs');
+        /* var bcrypt = require('bcryptjs'); */
         const result = await prisma.user.create({
             data: {
                 ...user,

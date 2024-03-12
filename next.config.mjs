@@ -12,7 +12,16 @@ const nextConfig = {
             test: /\.handlebars$/,
             loader: "handlebars-loader",
         });
+        config.externals = [...config.externals, 'bcrypt'];
         config.resolve.alias['handlebars'] = resolve(__dirname, 'node_modules', 'handlebars', 'dist', 'handlebars.js');
+        config.resolve = {
+            ...config.resolve,
+            fallback: {
+                "fs": false,
+                "path": false,
+                "os": false,
+            }
+        };
         return config;
     },
 };

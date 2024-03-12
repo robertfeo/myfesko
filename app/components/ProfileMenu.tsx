@@ -11,7 +11,7 @@ const ProfileMenu = () => {
 
     const handleSettings = () => {
         if (session?.user) {
-            router.push(`settings/${session!.user.id}`);
+            router.push(`/settings`);
         }
     };
 

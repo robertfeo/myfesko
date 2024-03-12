@@ -27,6 +27,7 @@ const config: Config = {
   },
   darkMode: "class",
   plugins: [
+    require("daisyui"),
     nextui({
       prefix: "nextui", // prefix for themes variables
       addCommonColors: false, // override common colors (e.g. "blue", "green", "pink").
