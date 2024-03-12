@@ -58,9 +58,13 @@ export const authOptions: AuthOptions = {
                 const bcrypt = require('bcryptjs');
 
                 const user = await prisma.user.findUnique({
+                    cacheStrategy: {
+                        ttl: 30,
+                        swr: 60,
+                    },
                     where: {
                         email: credentials?.username
-                    }
+                    },
                 });
                 if (!user) throw new Error('No user found')
 

@@ -1,9 +1,9 @@
 'use server'
 
-import { PrismaClient, User } from "@prisma/client";
+import { User } from "@prisma/client";
 import { signJWT, verifyJWT } from "../jwt";
 import { compileActivationTemplate, compileResetTemplate, compileSignedWithGooglePassword, sendMail } from "../mail";
-const prisma = new PrismaClient();
+import prisma from "../prisma";
 
 export async function verifyTurnstile(token: string): Promise<boolean> {
     const secretKey = process.env.CLOUDFLARE_TURNSTILE_SECRET_KEY;
@@ -17,7 +17,6 @@ export async function verifyTurnstile(token: string): Promise<boolean> {
     const data = await response.json();
     return data.success;
 }
-
 
 export async function registerUser(user: Omit<User, "id" | "emailVerified" | "image">, turnstileToken: string) {
     try {
