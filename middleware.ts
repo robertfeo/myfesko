@@ -8,6 +8,7 @@ export const config = {
         "/",
         "/api/:path*",
         "/chat/:path*",
+        "/settings/:path*",
     ],
     redirect: true,
     redirectUrl: "/auth/login"
