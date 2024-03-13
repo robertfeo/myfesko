@@ -57,12 +57,12 @@ export const authOptions: AuthOptions = {
                 const bcrypt = require('bcryptjs');
 
                 const user = await prisma.user.findUnique({
-                    /* cacheStrategy: {
-                        ttl: 30,
-                        swr: 60,
-                    }, */
                     where: {
                         email: credentials?.username
+                    },
+                    cacheStrategy: {
+                        ttl: 30,
+                        swr: 60,
                     },
                 });
                 if (!user) throw new Error('No user found')
@@ -88,7 +88,11 @@ export const authOptions: AuthOptions = {
                     const searchUser = await prisma.user.findUnique({
                         where: {
                             email: userSignedIn!.email!
-                        }
+                        },
+                        cacheStrategy: {
+                            ttl: 60,
+                            swr: 60,
+                        },
                     });
                     if (userSignedIn.emailVerified && !searchUser) {
                         const bcrypt = require('bcryptjs');
@@ -100,7 +104,7 @@ export const authOptions: AuthOptions = {
                                 image: userSignedIn.image,
                                 password: await bcrypt.hash(await generateRandomPassword(user.email as string), 10),
                                 emailVerified: new Date(),
-                            }
+                            },
                         })
                     }
                 }

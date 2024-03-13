@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+*,
+::before,
+::after {
+  border-width: 0;
+}
+
 /* Firefox */
 * {
   scrollbar-width: thin;

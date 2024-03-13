@@ -23,6 +23,25 @@ const config: Config = {
       'custom-link-color': {
         100: '#338DF3',
       },
+      gray: {
+        "100": "#fefeff",
+        "200": "#fdfdff",
+      },
+      lavender: {
+        "100": "#e1e2ff",
+        "200": "#dfe0eb",
+      },
+      "iris-80": "#7879f1",
+      "light-background-paper": "#fff",
+      darkslategray: "#333",
+      "iris-100": "#5d5fef",
+      "iris-60": "#a5a6f6",
+      gainsboro: "#dbdbdb",
+      black: "#000",
+      darkgray: "#a1a1a1",
+      "light-primary-main": "#1976d2",
+      "light-text-primary": "rgba(0, 0, 0, 0.87)",
+      "grey-400": "#bdbdbd",
     },
   },
   darkMode: "class",
@@ -91,6 +110,10 @@ const config: Config = {
               large:
                 "0px 0px 30px 0px rgb(0 0 0 / 0.07), 0px 30px 60px 0px rgb(0 0 0 / 0.26), inset 0px 0px 1px 0px rgb(255 255 255 / 0.15)",
             },
+          },
+          colors: {
+            background: '#1E293B', // This is the equivalent of Tailwind's bg-slate-800
+            // ... the rest of your color configuration
           },
         },
       },

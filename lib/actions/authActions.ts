@@ -52,7 +52,13 @@ export const activateUser: ActivateUserFunc = async (jwtUserID) => {
     try {
         const payload = verifyJWT(jwtUserID);
         const userID = payload?.id;
-        const user = await prisma.user.findUnique({ where: { id: userID } });
+        const user = await prisma.user.findUnique({
+            where: { id: userID },
+            cacheStrategy: {
+                ttl: 30,
+                swr: 60,
+            },
+        });
         if (!user) return "userNotExist";
         if (user.emailVerified) return "alreadyActivated";
         const result = await prisma.user.update({ where: { id: userID }, data: { emailVerified: new Date() } });
@@ -66,7 +72,13 @@ export const activateUser: ActivateUserFunc = async (jwtUserID) => {
 
 export async function forgotPassword(email: string) {
     try {
-        const user = await prisma.user.findUnique({ where: { email } });
+        const user = await prisma.user.findUnique({
+            where: { email },
+            cacheStrategy: {
+                ttl: 30,
+                swr: 60,
+            },
+        });
         if (!user) throw new Error("User not found");
         const jwtUserID = signJWT({ id: user.id });
         const resetURL = `${process.env.NEXTAUTH_URL}/auth/resetPassword/${jwtUserID}`;
@@ -89,7 +101,13 @@ export const resetPassword: ResetPasswordFunc = async (jwtUserID: string, passwo
         const payload = verifyJWT(jwtUserID);
         if (!payload) return "userNotExist";
         const userID = payload.id;
-        const user = await prisma.user.findUnique({ where: { id: userID } });
+        const user = await prisma.user.findUnique({
+            where: { id: userID },
+            cacheStrategy: {
+                ttl: 30,
+                swr: 60,
+            },
+        });
         if (!user) return "userNotExist";
         const bcrypt = require('bcryptjs');
         const newPassword = await bcrypt.hash(password, 10);

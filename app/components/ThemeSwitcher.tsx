@@ -23,7 +23,7 @@ export function ThemeSwitcher() {
 
     return (
         <>
-            <Button isIconOnly variant="light" aria-label="Toggle theme" size="sm" onClick={toggleTheme}>
+            <Button className="rounded-full" isIconOnly variant="light" aria-label="Toggle theme" size="sm" onClick={toggleTheme}>
                 {/* Display the appropriate icon based on the current theme */}
                 {theme === 'dark' ? <SunIcon className="w-4" /> : <MoonIcon className="w-3" />}
             </Button>
