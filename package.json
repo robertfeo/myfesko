@@ -5,7 +5,8 @@
   "scripts": {
     "prisma:migrate": "prisma migrate dev --name init",
     "docker": "npm run prisma:migrate && next dev",
-    "dev": "next dev",
+    "dev": "prisma generate --schema=./prisma/auth.prisma && next dev",
+    "websocket": "go run ./websocket/server.go",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -47,6 +48,7 @@
     "socket.io-client": "^4.7.4",
     "validator": "^13.11.0",
     "winston": "^3.12.0",
+    "ws": "^8.16.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {
@@ -65,5 +67,8 @@
   "description": "This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).",
   "main": "postcss.config.js",
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "optionalDependencies": {
+    "bufferutil": "^4.0.8"
+  }
 }
