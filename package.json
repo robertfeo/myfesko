@@ -7,7 +7,7 @@
     "docker": "npm run prisma:migrate && next dev",
     "dev": "prisma generate --schema=./prisma/auth.prisma && next dev",
     "websocket": "go run ./websocket/server.go",
-    "build": "next build",
+    "build": "prisma generate --schema=./prisma/auth.prisma && next build",
     "start": "next start",
     "lint": "next lint"
   },
