@@ -56,7 +56,7 @@ const RegisterForm = () => {
 
     useEffect(() => {
         setPassStrength(passwordStrength(watch().password).id);
-    }, [watch().password]);
+    }, [watch]);
 
     const [passStrength, setPassStrength] = useState(0)
     const [isVisiblePass, setIsVisiblePass] = useState(false)
