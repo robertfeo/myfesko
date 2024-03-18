@@ -39,11 +39,17 @@ jobs:
     runs-on: [myfesko-server]
     environment: MyFesko
     steps:
-      - name: Pull image from Docker Hub
+      - name: Stop Docker Container
+        run: docker stop myfesko-web || true
+      - name: Remove Docker Container
+        run: docker rm myfesko-web || true
+      - name: Remove Docker Image
+        run: docker rmi ${{ secrets.DOCKER_USERNAME }}/myfesko:latest || true
+      - name: Pull New Docker Image
         run: docker pull ${{ secrets.DOCKER_USERNAME }}/myfesko:latest
       - name: Run Docker Container
         run: |
-          docker run -d -p 9005:9005 \
+          docker run -d -p 9005:3000 \
           -e DIRECT_AUTH_DATABASE_URL=${{ secrets.DIRECT_AUTH_DATABASE_URL }} \
           -e DIRECT_CHAT_DATABASE_URL=${{ secrets.DIRECT_CHAT_DATABASE_URL }} \
           -e DATABASE_URL_ACCELERATE=${{ secrets.DATABASE_URL_ACCELERATE }} \
