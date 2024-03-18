@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Merge main -> cicd
-        uses: devmasx/merge-branch@1.4.0
+        uses: devmasx/merge-branch@master
         with:
           type: now
           target_branch: cicd
