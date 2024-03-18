@@ -16,7 +16,9 @@ jobs:
           type: now
           target_branch: cicd
           github_token: ${{ secrets.GITHUB_TOKEN }}
+
   build:
+    needs: merge-branch
     runs-on: ubuntu-latest
     environment: MyFesko
     steps:
