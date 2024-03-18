@@ -8,7 +8,7 @@
     "dev": "prisma generate --schema=./prisma/auth.prisma && next dev",
     "websocket": "go run ./websocket/server.go",
     "build": "prisma generate --schema=./prisma/auth.prisma && next build",
-    "start": "next start -p 9005",
+    "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
