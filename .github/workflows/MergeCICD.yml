@@ -13,7 +13,7 @@ jobs:
       - name: Branch Merge
         uses: everlytic/branch-merge@1.1.5
         with:
-          github_token: ${{ github.token }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           source_ref: ${{ github.ref }}
           target_branch: "cicd"
           commit_message_template: "[Automated] Merged {source_ref} into target {target_branch}"
