@@ -3,9 +3,19 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - cicd
+      - main
 
 jobs:
+  merge-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Merge main -> cicd
+        uses: devmasx/merge-branch@master
+        with:
+          type: now
+          target_branch: cicd
+          github_token: ${{ secrets.GITHUB_TOKEN }}
   build:
     runs-on: ubuntu-latest
     environment: MyFesko
