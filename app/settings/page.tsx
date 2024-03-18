@@ -1,6 +1,6 @@
+import { authOptions } from "@/lib/authOptions";
 import { Image } from "@nextui-org/react";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]/route";
 
 const ProfilePage = async () => {
     const session = await getServerSession(authOptions);
