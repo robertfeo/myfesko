@@ -41,20 +41,20 @@ jobs:
         run: docker pull ${{ secrets.DOCKER_USERNAME }}/myfesko:latest
       - name: Run Docker Container
         run: |
-          docker run -d -p ${{ secrets.NEXTJS_PORT }}:${{ secrets.NEXTJS_PORT }} \
-          -e DIRECT_AUTH_DATABASE_URL="${{ secrets.DIRECT_AUTH_DATABASE_URL }}" \
-          -e DIRECT_CHAT_DATABASE_URL="${{ secrets.DIRECT_CHAT_DATABASE_URL }}" \
-          -e DATABASE_URL_ACCELERATE="${{ secrets.DATABASE_URL_ACCELERATE }}" \
-          -e POSTGRES_USER="${{ secrets.POSTGRES_USER }}" \
-          -e POSTGRES_PASSWORD="${{ secrets.POSTGRES_PASSWORD }}" \
-          -e NEXT_PUBLIC_CLOUDFLARE_TURNSTILE_SITE_KEY="${{ secrets.NEXT_PUBLIC_CLOUDFLARE_TURNSTILE_SITE_KEY }}" \
-          -e CLOUDFLARE_TURNSTILE_SECRET_KEY="${{ secrets.CLOUDFLARE_TURNSTILE_SECRET_KEY }}" \
-          -e NEXTAUTH_URL="${{ secrets.NEXTAUTH_URL }}" \
-          -e NEXTAUTH_SECRET="${{ secrets.NEXTAUTH_SECRET }}" \
-          -e SMTP_GMAIL_EMAIL="${{ secrets.SMTP_GMAIL_EMAIL }}" \
-          -e SMTP_GMAIL_PASSWORD="${{ secrets.SMTP_GMAIL_PASSWORD }}" \
-          -e JWT_USER_ID_SECRET="${{ secrets.JWT_USER_ID_SECRET }}" \
-          -e AUTH_GOOGLE_ID="${{ secrets.AUTH_GOOGLE_ID }}" \
-          -e AUTH_GOOGLE_SECRET="${{ secrets.AUTH_GOOGLE_SECRET }}" \
-          -e WEBSOCKET_PORT="${{ secrets.WEBSOCKET_PORT }}" \
+          docker run -d -p 9005:9005 \
+          -e DIRECT_AUTH_DATABASE_URL=${{ secrets.DIRECT_AUTH_DATABASE_URL }} \
+          -e DIRECT_CHAT_DATABASE_URL=${{ secrets.DIRECT_CHAT_DATABASE_URL }} \
+          -e DATABASE_URL_ACCELERATE=${{ secrets.DATABASE_URL_ACCELERATE }} \
+          -e POSTGRES_USER=${{ secrets.POSTGRES_USER }} \
+          -e POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} \
+          -e NEXT_PUBLIC_CLOUDFLARE_TURNSTILE_SITE_KEY=${{ secrets.NEXT_PUBLIC_CLOUDFLARE_TURNSTILE_SITE_KEY }} \
+          -e CLOUDFLARE_TURNSTILE_SECRET_KEY=${{ secrets.CLOUDFLARE_TURNSTILE_SECRET_KEY }} \
+          -e NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }} \
+          -e NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }} \
+          -e SMTP_GMAIL_EMAIL=${{ secrets.SMTP_GMAIL_EMAIL }} \
+          -e SMTP_GMAIL_PASSWORD=${{ secrets.SMTP_GMAIL_PASSWORD }} \
+          -e JWT_USER_ID_SECRET=${{ secrets.JWT_USER_ID_SECRET }} \
+          -e AUTH_GOOGLE_ID=${{ secrets.AUTH_GOOGLE_ID }} \
+          -e AUTH_GOOGLE_SECRET=${{ secrets.AUTH_GOOGLE_SECRET }} \
+          -e WEBSOCKET_PORT=${{ secrets.WEBSOCKET_PORT }} \
           --name myfesko-web ${{ secrets.DOCKER_USERNAME }}/myfesko:latest
