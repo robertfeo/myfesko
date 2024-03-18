@@ -9,11 +9,10 @@ jobs:
   merge-branch:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Branch Merge
-        uses: everlytic/branch-merge@1.1.5
+      - uses: actions/checkout@master
+      - name: Merge main -> cicd
+        uses: devmasx/merge-branch@1.4.0
         with:
+          type: now
+          target_branch: cicd
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          source_ref: ${{ github.ref }}
-          target_branch: "cicd"
-          commit_message_template: "[Automated] Merged {source_ref} into target {target_branch}"
