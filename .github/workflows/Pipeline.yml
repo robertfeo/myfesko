@@ -9,7 +9,8 @@ jobs:
   merge-branch:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
+      - name: Checkout source code
+        uses: actions/checkout@master
       - name: Merge main -> cicd
         uses: devmasx/merge-branch@master
         with:
@@ -65,4 +66,5 @@ jobs:
           -e AUTH_GOOGLE_ID=${{ secrets.AUTH_GOOGLE_ID }} \
           -e AUTH_GOOGLE_SECRET=${{ secrets.AUTH_GOOGLE_SECRET }} \
           -e WEBSOCKET_PORT=${{ secrets.WEBSOCKET_PORT }} \
+          -e NODE_ENV="${{ secrets.NODE_ENV }}" \
           --name myfesko-web ${{ secrets.DOCKER_USERNAME }}/myfesko:latest

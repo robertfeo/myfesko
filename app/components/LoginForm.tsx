@@ -3,6 +3,7 @@
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/20/solid";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Input } from "@nextui-org/react";
+import dynamic from 'next/dynamic';
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -10,7 +11,6 @@ import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import { verifyTurnstile } from "@/lib/actions/authActions";
-import { Turnstile } from "@marsidev/react-turnstile";
 import { signIn } from "next-auth/react";
 import toast from "react-hot-toast";
 import { z } from "zod";
@@ -27,6 +27,10 @@ const FormSchema = z.object({
         required_error: "Please enter your password",
     }),
 });
+
+const CloudflareTurnstile = dynamic(() => import('../components/CloudflareTurnstile'), {
+    loading: () => <p className="text-medium text-zinc-300">Loading...</p>,
+})
 
 type InputType = z.infer<typeof FormSchema>;
 
@@ -64,7 +68,7 @@ const LoginForm = ({ callbackUrl, className = "" }: LoginFormProps) => {
             }
             if (result?.status === 200) {
                 toast.success("Logged in successfully!");
-                router.push(callbackUrl ? callbackUrl : "/");
+                router.push("/");
             }
         }
     };
@@ -97,7 +101,7 @@ const LoginForm = ({ callbackUrl, className = "" }: LoginFormProps) => {
                             <p>Forgot password?</p>
                             <Link className="text-[#338DF3]" href={"/auth/forgotPassword"}>Reset password</Link>
                         </div>
-                        <Turnstile
+                        {/* <Turnstile
                             options={{
                                 theme: "light",
                             }}
@@ -105,7 +109,8 @@ const LoginForm = ({ callbackUrl, className = "" }: LoginFormProps) => {
                             color="light"
                             siteKey={process.env.NEXT_PUBLIC_CLOUDFLARE_TURNSTILE_SITE_KEY!}
                             onSuccess={setToken}
-                            onLoad={() => toast.loading("Verifing User...")} />
+                            onLoad={() => toast.loading("Verifing User...")} /> */}
+                        <CloudflareTurnstile setToken={setToken} />
                     </div>
                     <div className="flex w-full items-center justify-center">
                         <Button size="sm" className="w-full shadow-sm backdrop-blur-sm" color="primary" type="submit" disabled={isSubmitting} isLoading={isSubmitting}>
