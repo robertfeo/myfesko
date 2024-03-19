@@ -23,7 +23,6 @@ export async function registerUser(user: Omit<User, "id" | "emailVerified" | "im
     try {
         const isVerified = await verifyTurnstile(turnstileToken);
         if (!isVerified) throw new Error('CAPTCHA verification failed.');
-        /* var bcrypt = require('bcryptjs'); */
         const result = await prisma.user.create({
             data: {
                 ...user,
