@@ -14,7 +14,7 @@ const ChatRooms = ({ className, user }: ChatUserProfileProps) => {
             {user ? (
                 <div className={`${className}`}>
                     <div className="flex flex-col items-center gap-4">
-                        <Avatar src={user.image!} size="md" />
+                        <Avatar src={user.image || `https://ui-avatars.com/api/?name=${user.firstname}+${user.lastname}`} size="md" />
                         <h1>{user.firstname}</h1>
                     </div>
                 </div>

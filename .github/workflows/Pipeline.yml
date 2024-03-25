@@ -67,4 +67,7 @@ jobs:
           -e AUTH_GOOGLE_SECRET=${{ secrets.AUTH_GOOGLE_SECRET }} \
           -e WEBSOCKET_PORT=${{ secrets.WEBSOCKET_PORT }} \
           -e NODE_ENV="${{ secrets.NODE_ENV }}" \
+          -e KEYCLOAK_ID="${{ secrets.KEYCLOAK_ID }}" \
+          -e KEYCLOAK_SECRET="${{ secrets.KEYCLOAK_SECRET }}" \
+          -e KEYCLOAK_ISSUER="${{ secrets.KEYCLOAK_ISSUER }}" \
           --name myfesko-web ${{ secrets.DOCKER_USERNAME }}/myfesko:latest

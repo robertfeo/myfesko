@@ -16,7 +16,7 @@ const ChatUserProfile = ({ className, user }: ChatUserProfileProps) => {
                 <div className={`${className}`}>
                     <div className="flex flex-col items-center gap-4 m-2 rounded-2xl">
                         <div className="flex flex-col items-center gap-2 m-2">
-                            <Avatar src={user.image!}
+                            <Avatar src={user.image! || `https://ui-avatars.com/api/?name=${user.firstname}+${user.lastname}?background=random`}
                                 alt="User profile"
                                 className="w-20 h-20 text-large" />
                             <h1 className="text-xl font-bold">{user.firstname} {user.lastname}</h1>

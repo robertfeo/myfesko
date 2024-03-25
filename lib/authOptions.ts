@@ -4,6 +4,7 @@ import { User } from "@prisma/client";
 import { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
+import KeycloakProvider from "next-auth/providers/keycloak";
 
 const winston = require("winston");
 
@@ -23,14 +24,29 @@ export const authOptions: AuthOptions = {
             logger.debug(code, metadata)
         }
     },
-    pages: {
+    /* pages: {
         signIn: '/auth/login',
-    },
+    }, */
     session: {
         strategy: 'jwt',
         maxAge: 10 * 24 * 60 * 60,
     },
     providers: [
+        KeycloakProvider({
+            clientId: process.env.KEYCLOAK_ID!,
+            clientSecret: process.env.KEYCLOAK_SECRET!,
+            issuer: process.env.KEYCLOAK_ISSUER,
+            profile(profile) {
+                return {
+                    id: profile.sub,
+                    firstname: profile.given_name,
+                    lastname: profile.family_name,
+                    email: profile.email,
+                    image: profile.picture,
+                    phone: profile.phone,
+                };
+            }
+        }),
         GoogleProvider({
             name: 'Google',
             clientId: process.env.AUTH_GOOGLE_ID!,
@@ -111,7 +127,9 @@ export const authOptions: AuthOptions = {
             return true
         },
         async jwt({ token, user }) {
-            if (user) token.user = user as User;
+            if (user) {
+                token.user = user as User;
+            }
             return token;
         },
         async session({ token, session }) {

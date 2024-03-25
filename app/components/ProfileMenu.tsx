@@ -32,7 +32,7 @@ const ProfileMenu = () => {
                                 color="success"
                                 name={`${session.user.firstname} ${session.user.lastname}`}
                                 size="sm"
-                                src={`${session.user.image!}` || "https://via.placeholder.com/150"}
+                                src={session.user.image ? `${session.user.image}` : `https://ui-avatars.com/api/?name=${session.user.firstname}+${session.user.lastname}`}
                             />
                         </DropdownTrigger>
                         <DropdownMenu aria-label="Profile Actions" variant="flat">
