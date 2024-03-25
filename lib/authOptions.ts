@@ -43,7 +43,6 @@ export const authOptions: AuthOptions = {
                     lastname: profile.family_name,
                     email: profile.email,
                     image: profile.picture,
-                    phone: profile.phone,
                 };
             }
         }),
