@@ -19,9 +19,9 @@ const config: Config = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
     },
-    color: {
+    /* color: {
       'custom-link-color': {
-        100: '#338DF3',
+        100: '#76ABAE',
       },
       gray: {
         "100": "#fefeff",
@@ -42,7 +42,7 @@ const config: Config = {
       "light-primary-main": "#1976d2",
       "light-text-primary": "rgba(0, 0, 0, 0.87)",
       "grey-400": "#bdbdbd",
-    },
+    }, */
   },
   darkMode: "class",
   plugins: [
@@ -95,6 +95,10 @@ const config: Config = {
                 "0px 0px 30px 0px rgb(0 0 0 / 0.04), 0px 30px 60px 0px rgb(0 0 0 / 0.12), 0px 0px 1px 0px rgb(0 0 0 / 0.3)",
             },
           },
+          colors: {
+            background: '#EEEEEE', // This is the equivalent of Tailwind's bg-slate-800
+            foreground: '#31363F', // This is the equivalent of Tailwind's text-white
+          },
         },
         dark: {
           layout: {
@@ -112,8 +116,8 @@ const config: Config = {
             },
           },
           colors: {
-            background: '#1E293B', // This is the equivalent of Tailwind's bg-slate-800
-            // ... the rest of your color configuration
+            background: '#27374D', // This is the equivalent of Tailwind's bg-slate-800
+            foreground: '#DDE6ED', // This is the equivalent of Tailwind's text-white
           },
         },
       },

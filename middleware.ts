@@ -5,12 +5,15 @@ export const config = {
     matcher: [
         "/profile/:path*",
         "/admin/:path*",
-        "/",
         "/api/:path*",
         "/chat/:path*",
         "/settings/:path*",
-        "/chat"
+        "/chat",
+        "/settings",
+        "/profile",
+        "/admin",
+        "/api",
     ],
     redirect: true,
-    redirectUrl: "/auth/login"
+    redirectUrl: "/"
 };
